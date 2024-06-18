@@ -1,19 +1,7 @@
 package com.example.ioc;
 
-import org.springframework.stereotype.Component;
+public interface Saluda {
 
-@Component
-public class Saluda {
-	Entorno entorno;
-	
-	
-	public Saluda(Entorno entorno) {
-		super();
-		this.entorno = entorno;
-	}
+	void saluda(String nombre);
 
-
-	public void saluda(String nombre) {
-		entorno.write("Hola "+ nombre);
-	}
 }
