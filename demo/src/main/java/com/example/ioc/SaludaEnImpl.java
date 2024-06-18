@@ -1,15 +1,13 @@
 package com.example.ioc;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary
-public class SaludaImpl implements Saluda {
+public class SaludaEnImpl implements Saluda {
 	Entorno entorno;
 	
 	
-	public SaludaImpl(Entorno entorno) {
+	public SaludaEnImpl(Entorno entorno) {
 		super();
 		this.entorno = entorno;
 	}
@@ -17,6 +15,6 @@ public class SaludaImpl implements Saluda {
 
 	@Override
 	public void saluda(String nombre) {
-		entorno.write("Hola "+ nombre);
+		entorno.write("Hello "+ nombre);
 	}
 }
