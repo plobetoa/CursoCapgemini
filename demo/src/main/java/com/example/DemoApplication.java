@@ -1,11 +1,13 @@
 package com.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.ioc.Entorno;
+import com.example.ioc.Rango;
 import com.example.ioc.Saluda;
 
 
@@ -23,6 +25,8 @@ public class DemoApplication implements CommandLineRunner{
 	Saluda saluda2;
 	@Autowired
 	Entorno entorno;
+	@Autowired
+	private Rango rango;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -38,6 +42,8 @@ public class DemoApplication implements CommandLineRunner{
 		System.out.println("entorno: " +entorno.getContador());
 		
 		System.out.println("saluda2: " + saluda2.getContador());
+		
+		System.out.println(rango.getMin() + "->" + rango.getMax());
 	}
 
 }
