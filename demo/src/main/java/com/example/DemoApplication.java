@@ -14,6 +14,8 @@ public class DemoApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada");
+		var s = new Saluda();
+		s.saluda("Mundo");
 		
 	}
 
