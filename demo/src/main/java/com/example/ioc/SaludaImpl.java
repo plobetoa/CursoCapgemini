@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("saludaEs")
 @Scope("prototype")
 @Primary
 public class SaludaImpl implements Saluda {
