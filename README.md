@@ -1,5 +1,5 @@
 ﻿# Repositorio del Bootcamp Capgemini
 
  - Autor: Pablo Lobeto Arenas
- - Docente: Javier Martín
+ - Docente: Javier Martín (jmagit)
   
