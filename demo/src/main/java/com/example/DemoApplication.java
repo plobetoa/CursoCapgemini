@@ -17,15 +17,15 @@ public class DemoApplication implements CommandLineRunner{
 	}
 
 	@Autowired
-	Saluda saluda;
+	Saluda saludaEs;
 	
 	@Autowired
-	Saluda saluda2;
+	Saluda saludaEn;
 	@Autowired
 	Entorno entorno;
 	
 	@Autowired(required = false)
-	SaludaEnImpl saludaEn;
+	SaludaEnImpl saluda2;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -33,12 +33,13 @@ public class DemoApplication implements CommandLineRunner{
 		
 		System.out.println(saluda2.getContador());
 		
-		saluda.saluda("Mundo");
-		saluda.saluda("Mundo");
+		saludaEs.saluda("Mundo");
+		saludaEs.saluda("Mundo");
+		saludaEn.saluda("World");
 		
-		System.out.println(saluda.getContador());
+		System.out.println(saludaEs.getContador());
 		System.out.println(entorno.getContador());
-		System.out.println(saluda2.getContador());
+		System.out.println(saludaEn.getContador());
 	}
 
 }

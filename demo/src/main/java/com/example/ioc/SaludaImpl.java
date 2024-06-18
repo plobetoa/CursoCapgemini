@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 @Component("saludaEs")
 @Scope("prototype")
-@Primary
 public class SaludaImpl implements Saluda {
 	Entorno entorno;
 	
