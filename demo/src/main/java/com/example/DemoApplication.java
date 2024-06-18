@@ -16,12 +16,19 @@ public class DemoApplication implements CommandLineRunner{
 
 	@Autowired
 	Saluda saluda;
+	
+	@Autowired
+	Saluda saluda2;
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada");
 		
+		System.out.println(saluda2.getContador());
+		
+		saluda.saluda("Mundo");
 		saluda.saluda("Mundo");
 		
+		System.out.println(saluda2.getContador());
 	}
 
 }

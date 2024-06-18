@@ -1,7 +1,5 @@
 package com.example.ioc;
 
-import org.springframework.stereotype.Service;
-
 
 public class EntornoImpl implements Entorno {
 	private int contador;
@@ -17,6 +15,7 @@ public class EntornoImpl implements Entorno {
 		System.out.println(cad);
 	}
 
+	@Override
 	public int getContador() {
 		return contador;
 	}
