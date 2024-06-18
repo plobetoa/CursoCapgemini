@@ -28,6 +28,8 @@ public class DemoApplication implements CommandLineRunner{
 		saluda.saluda("Mundo");
 		saluda.saluda("Mundo");
 		
+		System.out.println(saluda.getContador());
+		
 		System.out.println(saluda2.getContador());
 	}
 
