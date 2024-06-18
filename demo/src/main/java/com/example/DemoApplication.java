@@ -31,15 +31,16 @@ public class DemoApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada");
 		
-		System.out.println(saluda2.getContador());
+		
 		
 		saludaEs.saluda("Mundo");
 		saludaEs.saluda("Mundo");
 		saludaEn.saluda("World");
 		
-		System.out.println(saludaEs.getContador());
-		System.out.println(entorno.getContador());
-		System.out.println(saludaEn.getContador());
+		System.out.println("saludaEs: " +saludaEs.getContador());
+		System.out.println("entorno: " +entorno.getContador());
+		System.out.println("saludaEn: " + saludaEn.getContador());
+		System.out.println("saluda2: " + saluda2.getContador());
 	}
 
 }

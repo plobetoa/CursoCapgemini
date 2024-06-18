@@ -8,9 +8,14 @@ import org.springframework.context.annotation.Scope;
 public class MyConfig {
 	
 	@Bean
+	int contadorInit() {
+		return 0;
+		}
+	
+	@Bean
 	@Scope("prototype")
-	Entorno entorno() {
-		return new EntornoImpl(0);
+	Entorno entorno(int contadorInit) {
+		return new EntornoImpl(contadorInit);
 	}
 
 }
