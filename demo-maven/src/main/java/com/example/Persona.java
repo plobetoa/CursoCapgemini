@@ -28,7 +28,7 @@ public class Persona {
 		return nombre;
 	}
 	public void setNombre(String nombre) {
-		if(nombre == null) {
+		if(nombre == null || nombre.isBlank()) {
 			throw new IllegalArgumentException("Falta el nombre");
 		}
 		this.nombre = nombre;
@@ -37,7 +37,7 @@ public class Persona {
 		return Optional.ofNullable(apellidos);
 	}
 	public void setApellidos(String apellidos) {
-		if(apellidos == null) {
+		if(apellidos == null || apellidos.isBlank()) {
 			throw new IllegalArgumentException("Faltan los apellidos");
 		}
 		this.apellidos = apellidos;
