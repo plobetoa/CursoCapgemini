@@ -4,9 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import com.example.core.test.Smoke;
 
 class PersonaTest {
 
@@ -17,6 +20,7 @@ class PersonaTest {
 		class OK{
 			@Test
 			@DisplayName("Sin apellido")
+			@Smoke
 			void testCreate1(){
 				var persona = new Persona(1234,"Juan");
 				

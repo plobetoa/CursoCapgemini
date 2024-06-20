@@ -9,9 +9,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import com.example.core.test.Smoke;
 
 @DisplayName("Pruebas de la clase calculadora")
 class CalculadoraTest {
@@ -43,6 +46,7 @@ class CalculadoraTest {
 			@Test
 			@DisplayName("Suma dos enteros")
 			@RepeatedTest(value = 5, name = "{displayName} {currentRepetition}/{totalRepetitions}")
+			@Smoke
 			void testAdd() {
 				assertEquals(3, calculadora.add(1, 2));
 			}
@@ -56,6 +60,7 @@ class CalculadoraTest {
 
 			@Test
 			@DisplayName("Suma dos reales")
+			@Tag("smoke")
 			void testAdd3() {
 
 				var result = calculadora.add(1.24, 2.24);
