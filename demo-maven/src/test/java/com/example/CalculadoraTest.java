@@ -1,6 +1,8 @@
 package com.example;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -109,6 +111,14 @@ class CalculadoraTest {
 				assertThrows(ArithmeticException.class, () -> calculadora.div(3.0, 0.0));
 			}
 		}
+	}
+	
+	@Test
+	void simula() {
+		Calculadora calculadora = mock(Calculadora.class);
+		when(calculadora.add(2, 2)).thenReturn(3.0);
+		
+		assertEquals(3, calculadora.add(2, 2));
 	}
 
 }
