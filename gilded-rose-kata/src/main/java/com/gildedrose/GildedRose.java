@@ -43,12 +43,22 @@ class GildedRose {
     }
 
     private void updateNormalItemQuality(Item item) {
+        if (item.name.startsWith("Conjured")) {
+            updateConjuredItemQuality(item);
+        } else {
+            updateRegularItemQuality(item);
+        }
+    }
+
+    private void updateConjuredItemQuality(Item item) {
+        if (item.quality > 0) {
+            item.quality -= 2;
+        }
+    }
+
+    private void updateRegularItemQuality(Item item) {
         if (item.quality > 0 && !item.name.equals("Sulfuras, Hand of Ragnaros")) {
-            if (item.name.startsWith("Conjured")) {
-                item.quality -= 2;
-            } else {
-                item.quality--;
-            }
+            item.quality--;
         }
     }
 
@@ -63,17 +73,29 @@ class GildedRose {
             return;
         }
 
+        if (isSpecialItem(item)) {
+            handleExpiredSpecialItem(item);
+        } else {
+            handleExpiredNormalItem(item);
+        }
+    }
+
+    private void handleExpiredSpecialItem(Item item) {
         if (item.name.equals("Aged Brie")) {
             if (item.quality < 50) {
                 item.quality++;
             }
         } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
             item.quality = 0;
-        } else if (item.quality > 0 && !item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        }
+    }
+
+    private void handleExpiredNormalItem(Item item) {
+        if (item.quality > 0 && !item.name.equals("Sulfuras, Hand of Ragnaros")) {
             if (item.name.startsWith("Conjured")) {
-                item.quality -= 2;
+                updateConjuredItemQuality(item);
             } else {
-                item.quality--;
+                updateRegularItemQuality(item);
             }
         }
     }
