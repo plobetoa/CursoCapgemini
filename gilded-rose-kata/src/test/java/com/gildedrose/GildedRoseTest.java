@@ -55,7 +55,7 @@ class GildedRoseTest {
   		class OK{
   			@ParameterizedTest(name = "Caso {index}: {0} - {1} - {2} | resultad: {3}")
   			@DisplayName("Actualizar la calidad")
-  			@CsvSource(value = {"Conjurado Manzana, 2, 50, 48, 1", "Conjurado Manzana, 0, 50, 46, -1", "Conjurado Manzana, 0, 0, 0, -1", "ConjuradoManzana, 2, 0, 0, 1"})
+  			@CsvSource(value = {"Conjured Manzana, 2, 50, 48, 1", "Conjured Manzana, 0, 50, 46, -1", "Conjured Manzana, 0, 0, 0, -1", "Conjured Manzana, 2, 0, 0, 1"})
   			/**
 			 * Caso 1: quedan dias y queda calidad
 			 * Caso 2: no quedan dias y queda calidad
