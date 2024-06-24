@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.domains.contracts.repositories.ActorRepository;
+import com.example.domains.entities.Actor;
 import com.example.ioc.Entorno;
 import com.example.ioc.Rango;
 import com.example.ioc.Saluda;
@@ -18,32 +20,25 @@ public class DemoApplication implements CommandLineRunner{
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Autowired
-	Saluda saluda;
 	
 	@Autowired
-	Saluda saluda2;
-	@Autowired
-	Entorno entorno;
-	@Autowired
-	private Rango rango;
+	ActorRepository dao;
 	
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada");
+		var item = dao.findById(201);
+//		if(item.isEmpty()) {
+//			System.err.println("No encontrado");
+//		}
+//		else {
+//			System.out.println(item.get());
+//		}
+		dao.deleteById(201);
+		dao.findAll().forEach(System.out::println);
 		
-		
-		
-		saluda.saluda("Mundo");
-		saluda.saluda("Mundo");
-		saluda2.saluda("World");
-		
-		System.out.println("saludaEs: " +saluda.getContador());
-		System.out.println("entorno: " +entorno.getContador());
-		
-		System.out.println("saluda2: " + saluda2.getContador());
-		
-		System.out.println(rango.getMin() + "->" + rango.getMax());
+//		var actor = new Actor(0, "Pepito", "Grillo");
+//		System.out.println(dao.save(actor));
 	}
 
 }
