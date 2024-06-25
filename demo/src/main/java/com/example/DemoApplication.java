@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
@@ -49,6 +51,7 @@ public class DemoApplication implements CommandLineRunner{
 		dao.readByActorIdGreaterThanEqual(190).forEach(f -> System.out.println(f));
 		dao.searchByActorIdGreaterThanEqual(190).forEach(f -> System.out.println(f));
 		dao.queryByActorIdGreaterThanEqual(190, ActorDTO.class).forEach(i -> System.out.println(i));
+		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(i -> System.out.println(ActorDTO.from(i)));
 		
 //		var actor = new Actor(0, "Pepito", "Grillo");
 //		System.out.println(dao.save(actor));
