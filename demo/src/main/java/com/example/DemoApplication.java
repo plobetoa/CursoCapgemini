@@ -8,16 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
-import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.models.ActorDTO;
-import com.example.domains.entities.models.ActorShort;
 import com.example.domains.services.ActorServiceImpl;
-import com.example.ioc.Entorno;
-import com.example.ioc.Rango;
-import com.example.ioc.Saluda;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import jakarta.transaction.Transactional;

@@ -9,13 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.domains.contracts.repositories.CategoryRepository;
-import com.example.domains.contracts.repositories.FilmRepository;
-import com.example.domains.contracts.repositories.LanguageRepository;
 import com.example.domains.contracts.services.CategoryService;
-import com.example.domains.contracts.services.FilmService;
-import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.Category;
-import com.example.domains.entities.Language;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
