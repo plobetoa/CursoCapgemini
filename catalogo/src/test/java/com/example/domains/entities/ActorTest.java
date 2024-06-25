@@ -26,10 +26,11 @@ class ActorTest {
 			@Nested
 			class KO{
 				@ParameterizedTest(name = "Caso {index}: {0} - {1} - {2}")
-				@DisplayName("Datos correctos")
+				@DisplayName("Datos incorrectos")
 				@CsvSource(value = {"1, ,Carlos","1,Carlos, ", "1,'',Carlos","1,carlos,''", 
 						"1, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, Carlos", 
-						"1, Carlos, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"})
+						"1, Carlos, aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+						"1, a, Carlos", "1, Carlos, a", "1,'     ',Carlos", "1, Carlos, '      '"})
 				void test1(int id, String name, String surname){
 					var test = new Actor(id,name,surname);
 					assertTrue(test.isInvalid());
