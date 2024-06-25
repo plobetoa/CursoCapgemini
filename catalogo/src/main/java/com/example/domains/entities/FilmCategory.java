@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
 import com.example.domains.core.entities.EntityBase;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -34,6 +35,7 @@ public class FilmCategory extends EntityBase<FilmCategory> implements Serializab
 	@ManyToOne
 	@JoinColumn(name="film_id", nullable=false, insertable=false, updatable=false)
 	@NotBlank
+	@JsonManagedReference
 	private Film film;
 
 	public FilmCategory() {

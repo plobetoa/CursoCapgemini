@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 /**
@@ -37,6 +38,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="category")
+	@JsonBackReference
 	private List<FilmCategory> filmCategories;
 
 	public Category() {
