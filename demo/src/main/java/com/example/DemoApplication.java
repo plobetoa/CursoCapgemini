@@ -58,13 +58,13 @@ public class DemoApplication implements CommandLineRunner{
 		actorSrv.getAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(i -> System.out.println(ActorDTO.from(i)));
 		var serializa = new XmlMapper();
 //		var serializa = new ObjectMapper();
-//		actorSrv.queryByActorIdGreaterThanEqual(198, Actor.class).forEach(f -> {
-//			try {
-//				System.out.println(serializa.writeValueAsString(f));
-//			} catch (JsonProcessingException e) {
-//				e.printStackTrace();
-//			}
-//		});
+		actorSrv.getByProjection(Actor.class).forEach(f -> {
+			try {
+				System.out.println(serializa.writeValueAsString(f));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		});
 		
 //		var actor = new Actor(0, "Pepito", "Grillo");
 //		System.out.println(dao.save(actor));
