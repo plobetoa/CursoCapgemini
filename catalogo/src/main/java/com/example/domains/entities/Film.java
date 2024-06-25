@@ -83,6 +83,28 @@ public class Film extends EntityBase<Film> implements Serializable {
 	public Film() {
 	}
 
+	
+	
+	public Film(int filmId) {
+		this.filmId = filmId;
+	}
+
+
+	
+	
+
+	public Film(int filmId, int length, @Size(max = 1, min = 1) String rating, @NotBlank byte rentalDuration,
+			@NotBlank BigDecimal rentalRate, @NotBlank BigDecimal replacementCost) {
+		this.filmId = filmId;
+		this.length = length;
+		this.rating = rating;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+	}
+
+
+
 	public int getFilmId() {
 		return this.filmId;
 	}
