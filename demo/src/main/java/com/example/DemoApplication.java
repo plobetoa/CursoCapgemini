@@ -12,6 +12,7 @@ import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.ActorShort;
+import com.example.domains.services.ActorServiceImpl;
 import com.example.ioc.Entorno;
 import com.example.ioc.Rango;
 import com.example.ioc.Saluda;
@@ -31,13 +32,13 @@ public class DemoApplication implements CommandLineRunner{
 
 	
 	@Autowired
-	ActorRepository dao;
+	ActorServiceImpl actorSrv;
 	
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada");
-		var item = dao.findById(1);
+		var item = actorSrv.getOne(1);
 		if(item.isEmpty()) {
 			System.err.println("No encontrado");
 		}
@@ -46,24 +47,24 @@ public class DemoApplication implements CommandLineRunner{
 			System.out.println(item.get());
 			actor.getFilmActors().forEach(f -> System.out.println(f.getFilm().getTitle()));
 		}
-		dao.deleteById(201);
+//		actorSrv.deleteById(201);
 //		dao.findAll((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("actorId"), 200)).forEach(System.out::println);
 //		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"), 10)).forEach(System.out::println);
 //		dao.findAll().forEach(i -> System.out.println(ActorDTO.from(i)));
 		
-		dao.readByActorIdGreaterThanEqual(190).forEach(f -> System.out.println(f));
-		dao.searchByActorIdGreaterThanEqual(190).forEach(f -> System.out.println(f));
-		dao.queryByActorIdGreaterThanEqual(190, ActorDTO.class).forEach(i -> System.out.println(i));
-		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(i -> System.out.println(ActorDTO.from(i)));
+//		actorSrv.readByActorIdGreaterThanEqual(190).forEach(f -> System.out.println(f));
+//		actorSrv.searchByActorIdGreaterThanEqual(190).forEach(f -> System.out.println(f));
+//		actorSrv.queryByActorIdGreaterThanEqual(190, ActorDTO.class).forEach(i -> System.out.println(i));
+		actorSrv.getAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(i -> System.out.println(ActorDTO.from(i)));
 		var serializa = new XmlMapper();
 //		var serializa = new ObjectMapper();
-		dao.queryByActorIdGreaterThanEqual(198, Actor.class).forEach(f -> {
-			try {
-				System.out.println(serializa.writeValueAsString(f));
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-		});
+//		actorSrv.queryByActorIdGreaterThanEqual(198, Actor.class).forEach(f -> {
+//			try {
+//				System.out.println(serializa.writeValueAsString(f));
+//			} catch (JsonProcessingException e) {
+//				e.printStackTrace();
+//			}
+//		});
 		
 //		var actor = new Actor(0, "Pepito", "Grillo");
 //		System.out.println(dao.save(actor));
