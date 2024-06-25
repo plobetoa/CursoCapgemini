@@ -15,6 +15,9 @@ import com.example.domains.entities.models.ActorShort;
 import com.example.ioc.Entorno;
 import com.example.ioc.Rango;
 import com.example.ioc.Saluda;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import jakarta.transaction.Transactional;
 
@@ -52,6 +55,15 @@ public class DemoApplication implements CommandLineRunner{
 		dao.searchByActorIdGreaterThanEqual(190).forEach(f -> System.out.println(f));
 		dao.queryByActorIdGreaterThanEqual(190, ActorDTO.class).forEach(i -> System.out.println(i));
 		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(i -> System.out.println(ActorDTO.from(i)));
+		var serializa = new XmlMapper();
+//		var serializa = new ObjectMapper();
+		dao.queryByActorIdGreaterThanEqual(198, Actor.class).forEach(f -> {
+			try {
+				System.out.println(serializa.writeValueAsString(f));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+		});
 		
 //		var actor = new Actor(0, "Pepito", "Grillo");
 //		System.out.println(dao.save(actor));
