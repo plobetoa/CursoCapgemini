@@ -7,6 +7,7 @@ import com.example.domains.entities.Actor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@SuppressWarnings("serial")
 @Data @AllArgsConstructor
 public class ActorDTO implements Serializable {
 	private int actorId;

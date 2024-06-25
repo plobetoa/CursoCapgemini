@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "app.contador.init",
+  "type": "java.lang.String",
+  "description": "A description for 'app.contador.init'"
+}]}

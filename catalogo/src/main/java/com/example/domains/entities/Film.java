@@ -2,8 +2,10 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
@@ -35,25 +37,30 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	private Timestamp lastUpdate;
 
+	@PositiveOrZero
+	@Digits(fraction = 0, integer = 5)
 	private int length;
 
 	@Column(length=1)
-	@Size(max=1, min=1)
 	private String rating;
 
 	@Column(name="release_year")
 	private Short releaseYear;
 
 	@Column(name="rental_duration", nullable=false)
-	@NotBlank
+	@NotNull
+	@PositiveOrZero
+	@Digits(fraction = 0, integer = 3)
 	private byte rentalDuration;
 
 	@Column(name="rental_rate", nullable=false, precision=10, scale=2)
-	@NotBlank
+	@NotNull
+	@Digits(fraction = 2, integer = 4)
 	private BigDecimal rentalRate;
 
 	@Column(name="replacement_cost", nullable=false, precision=10, scale=2)
-	@NotBlank
+	@NotNull
+	@Digits(fraction = 2, integer = 5)
 	private BigDecimal replacementCost;
 
 	@Column(nullable=false, length=128)
