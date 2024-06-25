@@ -2,6 +2,9 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.sql.Timestamp;
 
 import com.example.domains.core.entities.EntityBase;
@@ -26,11 +29,13 @@ public class FilmCategory extends EntityBase<FilmCategory> implements Serializab
 	//bi-directional many-to-one association to Category
 	@ManyToOne
 	@JoinColumn(name="category_id", nullable=false, insertable=false, updatable=false)
+	@NotBlank
 	private Category category;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
 	@JoinColumn(name="film_id", nullable=false, insertable=false, updatable=false)
+	@NotBlank
 	private Film film;
 
 	public FilmCategory() {

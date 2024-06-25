@@ -2,9 +2,14 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
 
@@ -33,26 +38,33 @@ public class Film extends EntityBase<Film> implements Serializable {
 	private int length;
 
 	@Column(length=1)
+	@Size(max=1, min=1)
 	private String rating;
 
 	@Column(name="release_year")
 	private Short releaseYear;
 
 	@Column(name="rental_duration", nullable=false)
+	@NotBlank
 	private byte rentalDuration;
 
 	@Column(name="rental_rate", nullable=false, precision=10, scale=2)
+	@NotBlank
 	private BigDecimal rentalRate;
 
 	@Column(name="replacement_cost", nullable=false, precision=10, scale=2)
+	@NotBlank
 	private BigDecimal replacementCost;
 
 	@Column(nullable=false, length=128)
+	@NotBlank
+	@Size(max=128, min=2)
 	private String title;
 
 	//bi-directional many-to-one association to Language
 	@ManyToOne
 	@JoinColumn(name="language_id", nullable=false)
+	@NotNull
 	private Language language;
 
 	//bi-directional many-to-one association to Language
@@ -210,5 +222,36 @@ public class Film extends EntityBase<Film> implements Serializable {
 
 		return filmCategory;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(description, filmId, lastUpdate, length, rating, releaseYear, rentalDuration, rentalRate,
+				replacementCost, title);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Film other = (Film) obj;
+		return Objects.equals(description, other.description) && filmId == other.filmId
+				&& Objects.equals(lastUpdate, other.lastUpdate) && length == other.length
+				&& Objects.equals(rating, other.rating) && Objects.equals(releaseYear, other.releaseYear)
+				&& rentalDuration == other.rentalDuration && Objects.equals(rentalRate, other.rentalRate)
+				&& Objects.equals(replacementCost, other.replacementCost) && Objects.equals(title, other.title);
+	}
+
+	@Override
+	public String toString() {
+		return "Film [filmId=" + filmId + ", description=" + description + ", lastUpdate=" + lastUpdate + ", length="
+				+ length + ", rating=" + rating + ", releaseYear=" + releaseYear + ", rentalDuration=" + rentalDuration
+				+ ", rentalRate=" + rentalRate + ", replacementCost=" + replacementCost + ", title=" + title + "]";
+	}
+	
+	
 
 }

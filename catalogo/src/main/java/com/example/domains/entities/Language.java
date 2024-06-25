@@ -2,6 +2,10 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -27,6 +31,8 @@ public class Language extends EntityBase<Language> implements Serializable {
 	private Timestamp lastUpdate;
 
 	@Column(nullable=false, length=20)
+	@NotBlank
+	@Size(max=20, min=2)
 	private String name;
 
 	//bi-directional many-to-one association to Film

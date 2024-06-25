@@ -2,8 +2,13 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
 
@@ -27,6 +32,8 @@ public class Category extends EntityBase<Category> implements Serializable {
 	private Timestamp lastUpdate;
 
 	@Column(nullable=false, length=25)
+	@NotBlank
+	@Size(max=25, min=2)
 	private String name;
 
 	//bi-directional many-to-one association to FilmCategory
@@ -81,5 +88,32 @@ public class Category extends EntityBase<Category> implements Serializable {
 
 		return filmCategory;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(categoryId, lastUpdate, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		return categoryId == other.categoryId && Objects.equals(lastUpdate, other.lastUpdate)
+				&& Objects.equals(name, other.name);
+	}
+
+	@Override
+	public String toString() {
+		return "Category [categoryId=" + categoryId + ", lastUpdate=" + lastUpdate + ", name=" + name + "]";
+	}
+	
+	
+	
+	
 
 }
