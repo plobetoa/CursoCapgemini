@@ -69,7 +69,7 @@ public class ActorServiceImpl implements ActorService {
 		if(item.isInvalid()) {
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		}
-		if(item.getActorId() != 0 && dao.existsById(item.getActorId())) {
+		if(item.getActorId() != 0 || dao.existsById(item.getActorId())) {
 			throw new DuplicateKeyException("Ya existe");
 		}
 		return dao.save(item);
@@ -83,7 +83,7 @@ public class ActorServiceImpl implements ActorService {
 		if(item.isInvalid()) {
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		}
-		if(item.getActorId() == 0 && !dao.existsById(item.getActorId())) {
+		if(item.getActorId() == 0 || !dao.existsById(item.getActorId())) {
 			throw new NotFoundException("No existe");
 		}
 		return dao.save(item);
