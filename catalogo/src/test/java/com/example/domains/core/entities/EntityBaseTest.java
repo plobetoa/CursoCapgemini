@@ -1,5 +1,6 @@
 package com.example.domains.core.entities;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
@@ -52,8 +53,9 @@ class EntityBaseTest {
 			void test1(int id, String name){
 				var test = new Dummy(id,name);
 				test.isInvalid();
-				System.out.println(test.getErrorsMessage() + test.getErrorsFields());
-				assertTrue(test.isInvalid());
+				assertAll("Entity",() -> assertTrue(test.isInvalid()),
+						()-> assertTrue(!test.getErrorsFields().isEmpty()), 
+						()->assertTrue(!test.getErrorsMessage().isBlank()));
 			}
 			
 		}
