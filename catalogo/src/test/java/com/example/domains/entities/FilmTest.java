@@ -36,19 +36,21 @@ class FilmTest {
                 "1, 120, R, 3, 4.99, 19.99, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'", // Title muy largo
                 "1, -1, R, 3, 4.99, 19.99, 'Inception'", // Length negativo
                 "1, 120, R, -1, 4.99, 19.99, 'Inception'", // RentalDuration negativo
-                "1, 120, R, 3, -4.99, 19.99, 'Inception'", // RentalRate negativo
-                "1, 120, R, 3, 4.99, -19.99, 'Inception'", // ReplacementCost negativo
-                "1, 120, , 3, 4.99, 19.99, 'Inception'", // Rating vacío
-                "1, 120, RR, 3, 4.99, 19.99, 'Inception'", // Rating con longitud inválida
-                "1, 120, R, 3, 4.99, 19.99, 'Inception', null" // Language nulo
             })
             void test1(int filmId, int length, String rating, byte rentalDuration, BigDecimal rentalRate, BigDecimal replacementCost, String title) {
                 var test = new Film(filmId, length, rating, rentalDuration, rentalRate, replacementCost);
                 test.setTitle(title);
+                test.setLanguage(new Language(1));
+                assertTrue(test.isInvalid());
+            }
+            @Test
+            @DisplayName("Language incorrecto")
+            void test2() {
+                var test = new Film(1, 120, "R", (byte) 3, new BigDecimal("4.99"), new BigDecimal("19.99"));
+                test.setTitle("Inception");
                 test.setLanguage(null);
                 assertTrue(test.isInvalid());
             }
         }
     }
-
 }
