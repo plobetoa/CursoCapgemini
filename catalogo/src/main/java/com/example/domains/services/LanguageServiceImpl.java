@@ -69,7 +69,7 @@ public class LanguageServiceImpl implements LanguageService {
 		if(item.isInvalid()) {
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		}
-		if(item.getLanguageId() != 0 && dao.existsById(item.getLanguageId())) {
+		if(item.getLanguageId() != 0 || dao.existsById(item.getLanguageId())) {
 			throw new DuplicateKeyException("Ya existe");
 		}
 		return dao.save(item);
@@ -83,7 +83,7 @@ public class LanguageServiceImpl implements LanguageService {
 		if(item.isInvalid()) {
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		}
-		if(item.getLanguageId() == 0 && !dao.existsById(item.getLanguageId())) {
+		if(item.getLanguageId() == 0 || !dao.existsById(item.getLanguageId())) {
 			throw new NotFoundException("No existe");
 		}
 		return dao.save(item);

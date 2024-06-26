@@ -69,7 +69,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if(item.isInvalid()) {
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		}
-		if(item.getCategoryId() != 0 && dao.existsById(item.getCategoryId())) {
+		if(item.getCategoryId() != 0 || dao.existsById(item.getCategoryId())) {
 			throw new DuplicateKeyException("Ya existe");
 		}
 		return dao.save(item);
@@ -83,7 +83,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if(item.isInvalid()) {
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		}
-		if(item.getCategoryId() == 0 && !dao.existsById(item.getCategoryId())) {
+		if(item.getCategoryId() == 0 || !dao.existsById(item.getCategoryId())) {
 			throw new NotFoundException("No existe");
 		}
 		return dao.save(item);
