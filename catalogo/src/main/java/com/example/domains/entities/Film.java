@@ -7,8 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-import lombok.experimental.var;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
@@ -218,25 +216,25 @@ public class Film extends EntityBase<Film> implements Serializable {
 	}
 
 	public FilmActor addFilmActor(Actor actor) {
-		var filmActor = new FilmActor(this,actor);
+		FilmActor filmActor = new FilmActor(this,actor);
 		getFilmActors().add(filmActor);
 		return filmActor;
 	}
 
 	public FilmActor removeFilmActor(Actor actor) {
-		var filmActor = new FilmActor(this, actor);
+		FilmActor filmActor = new FilmActor(this, actor);
 		getFilmActors().remove(filmActor);
 
 		return filmActor;
 	}
 	
 	public FilmActor addFilmActor(int actorId) {
-		var actor = new Actor(actorId);
+		Actor actor = new Actor(actorId);
 		return addFilmActor(actor);
 	}
 	
 	public FilmActor removeFilmActor(int actorId) {
-		var actor = new Actor(actorId);
+		Actor actor = new Actor(actorId);
 		return removeFilmActor(actor);
 	}
 
@@ -249,25 +247,25 @@ public class Film extends EntityBase<Film> implements Serializable {
 	}
 
 	public FilmCategory addFilmCategory(Category item) {
-		var filmCategory = new FilmCategory(this, item);
+		FilmCategory filmCategory = new FilmCategory(this, item);
 		getFilmCategories().add(filmCategory);
 		return filmCategory;
 	}
 
 	public FilmCategory removeFilmCategory(Category category) {
-		var filmCategory = new FilmCategory(this, category);
+		FilmCategory filmCategory = new FilmCategory(this, category);
 		getFilmCategories().remove(filmCategory);
 
 		return filmCategory;
 	}
 	
 	public FilmCategory addFilmCategory(int categoryId) {
-		var category = new Category(categoryId);
+		Category category = new Category(categoryId);
 		return addFilmCategory(category);
 	}
 	
 	public FilmCategory removeFilmCategory(int categoryId) {
-		var category = new Category(categoryId);
+		Category category = new Category(categoryId);
 		return removeFilmCategory(category);
 	}
 
