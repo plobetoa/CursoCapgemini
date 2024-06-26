@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
+import lombok.experimental.var;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -216,18 +217,27 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.filmActors = filmActors;
 	}
 
-	public FilmActor addFilmActor(FilmActor filmActor) {
+	public FilmActor addFilmActor(Actor actor) {
+		var filmActor = new FilmActor(this,actor);
 		getFilmActors().add(filmActor);
-		filmActor.setFilm(this);
-
 		return filmActor;
 	}
 
-	public FilmActor removeFilmActor(FilmActor filmActor) {
+	public FilmActor removeFilmActor(Actor actor) {
+		var filmActor = new FilmActor(this, actor);
 		getFilmActors().remove(filmActor);
-		filmActor.setFilm(null);
 
 		return filmActor;
+	}
+	
+	public FilmActor addFilmActor(int actorId) {
+		var actor = new Actor(actorId);
+		return addFilmActor(actor);
+	}
+	
+	public FilmActor removeFilmActor(int actorId) {
+		var actor = new Actor(actorId);
+		return removeFilmActor(actor);
 	}
 
 	public List<FilmCategory> getFilmCategories() {
@@ -238,25 +248,37 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.filmCategories = filmCategories;
 	}
 
-	public FilmCategory addFilmCategory(FilmCategory filmCategory) {
+	public FilmCategory addFilmCategory(Category item) {
+		var filmCategory = new FilmCategory(this, item);
 		getFilmCategories().add(filmCategory);
-		filmCategory.setFilm(this);
-
 		return filmCategory;
 	}
 
-	public FilmCategory removeFilmCategory(FilmCategory filmCategory) {
+	public FilmCategory removeFilmCategory(Category category) {
+		var filmCategory = new FilmCategory(this, category);
 		getFilmCategories().remove(filmCategory);
-		filmCategory.setFilm(null);
 
 		return filmCategory;
 	}
+	
+	public FilmCategory addFilmCategory(int categoryId) {
+		var category = new Category(categoryId);
+		return addFilmCategory(category);
+	}
+	
+	public FilmCategory removeFilmCategory(int categoryId) {
+		var category = new Category(categoryId);
+		return removeFilmCategory(category);
+	}
+
+	
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, filmId, lastUpdate, length, rating, releaseYear, rentalDuration, rentalRate,
-				replacementCost, title);
+		return Objects.hash(filmId);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -267,12 +289,10 @@ public class Film extends EntityBase<Film> implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
-		return Objects.equals(description, other.description) && filmId == other.filmId
-				&& Objects.equals(lastUpdate, other.lastUpdate) && length == other.length
-				&& Objects.equals(rating, other.rating) && Objects.equals(releaseYear, other.releaseYear)
-				&& rentalDuration == other.rentalDuration && Objects.equals(rentalRate, other.rentalRate)
-				&& Objects.equals(replacementCost, other.replacementCost) && Objects.equals(title, other.title);
+		return filmId == other.filmId;
 	}
+
+
 
 	@Override
 	public String toString() {

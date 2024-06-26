@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.domains.contracts.repositories.FilmRepository;
 import com.example.domains.contracts.services.FilmService;
+import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
+import com.example.domains.entities.FilmActor;
+import com.example.domains.entities.FilmCategory;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
@@ -88,6 +92,9 @@ public class FilmServiceImpl implements FilmService {
 		}
 		return dao.save(item);
 	}
+	
+	
+	
 
 	@Override
 	public void delete(Film item) throws InvalidDataException {

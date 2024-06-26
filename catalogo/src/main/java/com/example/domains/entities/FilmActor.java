@@ -4,6 +4,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -42,6 +43,12 @@ public class FilmActor extends EntityBase<FilmActor> implements Serializable {
 	public FilmActor() {
 	}
 
+	public FilmActor(Film film, Actor actor) {
+		setFilm(film);
+		setActor(actor);
+		setId(new FilmActorPK(film.getFilmId(), actor.getActorId()));
+	}
+
 	public FilmActorPK getId() {
 		return this.id;
 	}
@@ -73,5 +80,29 @@ public class FilmActor extends EntityBase<FilmActor> implements Serializable {
 	public void setFilm(Film film) {
 		this.film = film;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FilmActor other = (FilmActor) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "FilmActor [id=" + id + ", lastUpdate=" + lastUpdate + ", actor=" + actor + ", film=" + film + "]";
+	}
+	
+	
 
 }

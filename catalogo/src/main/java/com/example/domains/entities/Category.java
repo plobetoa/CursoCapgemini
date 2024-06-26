@@ -107,10 +107,14 @@ public class Category extends EntityBase<Category> implements Serializable {
 		return filmCategory;
 	}
 
+	
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(categoryId, lastUpdate, name);
+		return Objects.hash(categoryId);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -121,9 +125,10 @@ public class Category extends EntityBase<Category> implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Category other = (Category) obj;
-		return categoryId == other.categoryId && Objects.equals(lastUpdate, other.lastUpdate)
-				&& Objects.equals(name, other.name);
+		return categoryId == other.categoryId;
 	}
+
+
 
 	@Override
 	public String toString() {
