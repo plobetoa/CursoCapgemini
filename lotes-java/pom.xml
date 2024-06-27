@@ -12,7 +12,7 @@
 	<artifactId>lotes-java</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>lotes-java</name>
-	<description>Catalogo para sakila</description>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -32,7 +32,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-batch</artifactId>
 		</dependency>
 
 		<dependency>
@@ -48,6 +48,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
