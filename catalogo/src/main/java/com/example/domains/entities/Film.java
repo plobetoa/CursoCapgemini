@@ -25,6 +25,56 @@ import com.example.domains.core.entities.EntityBase;
 public class Film extends EntityBase<Film> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	
+	public static enum Rating {
+	    GENERAL_AUDIENCES("G"),
+	    PARENTAL_GUIDANCE_SUGGESTED("PG"),
+	    PARENTS_STRONGLY_CAUTIONED("PG-13"),
+	    RESTRICTED("R"),
+	    ADULTS_ONLY("NC-17");
+
+	    String value;
+	    
+	    Rating(String value) {
+	        this.value = value;
+	    }
+
+	    public String getValue() {
+	        return value;
+	    }
+		public static Rating getEnum(String value) {
+			switch (value) {
+			case "G": return Rating.GENERAL_AUDIENCES;
+			case "PG": return Rating.PARENTAL_GUIDANCE_SUGGESTED;
+			case "PG-13": return Rating.PARENTS_STRONGLY_CAUTIONED;
+			case "R": return Rating.RESTRICTED;
+			case "NC-17": return Rating.ADULTS_ONLY;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + value);
+			}
+		}
+		public static final String[] VALUES = {"G", "PG", "PG-13", "R", "NC-17"};
+	}
+	@Converter
+	private static class RatingConverter implements AttributeConverter<Rating, String> {
+	    @Override
+	    public String convertToDatabaseColumn(Rating rating) {
+	        if (rating == null) {
+	            return null;
+	        }
+	        return rating.getValue();
+	    }
+	    @Override
+	    public Rating convertToEntityAttribute(String value) {
+	        if (value == null) {
+	            return null;
+	        }
+
+	        return Rating.getEnum(value);
+	    }
+	}
+
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="film_id", unique=true, nullable=false)
@@ -40,7 +90,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@Digits(fraction = 0, integer = 5)
 	private int length;
 
-	@Column(length=1)
+	@Convert(converter = RatingConverter.class)
 	private String rating;
 
 	@Column(name="release_year")
