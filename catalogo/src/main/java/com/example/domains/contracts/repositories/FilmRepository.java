@@ -7,8 +7,5 @@ import com.example.domains.entities.FilmActor;
 import com.example.domains.entities.FilmCategory;
 
 public interface FilmRepository extends ProjectionsAndSpecificationJpaRepository<Film, Integer> {
-	
-	void addFilmActor(FilmActor filmActor);
-	void addFilmCategory(FilmCategory filmCategory);
 
 }

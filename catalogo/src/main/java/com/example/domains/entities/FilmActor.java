@@ -2,12 +2,8 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.sql.Timestamp;
-import java.util.Objects;
 
-import com.example.domains.core.entities.EntityBase;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.sql.Timestamp;
 
 
 /**
@@ -17,35 +13,32 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name="film_actor")
 @NamedQuery(name="FilmActor.findAll", query="SELECT f FROM FilmActor f")
-public class FilmActor extends EntityBase<FilmActor> implements Serializable {
+public class FilmActor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private FilmActorPK id;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
-	
+	@Column(name="last_update", insertable = false, updatable = false)
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Actor
 	@ManyToOne
-	@JoinColumn(name="actor_id", nullable=false, insertable=false, updatable=false)
-	@NotBlank
+	@JoinColumn(name="actor_id", insertable=false, updatable=false)
 	private Actor actor;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
-	@JoinColumn(name="film_id", nullable=false, insertable=false, updatable=false)
-	@NotBlank
-	@JsonManagedReference
+	@JoinColumn(name="film_id", insertable=false, updatable=false)
 	private Film film;
 
 	public FilmActor() {
 	}
 
 	public FilmActor(Film film, Actor actor) {
-		setFilm(film);
-		setActor(actor);
+		super();
+		this.film = film;
+		this.actor = actor;
 		setId(new FilmActorPK(film.getFilmId(), actor.getActorId()));
 	}
 
@@ -80,29 +73,5 @@ public class FilmActor extends EntityBase<FilmActor> implements Serializable {
 	public void setFilm(Film film) {
 		this.film = film;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FilmActor other = (FilmActor) obj;
-		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public String toString() {
-		return "FilmActor [id=" + id + ", lastUpdate=" + lastUpdate + ", actor=" + actor + ", film=" + film + "]";
-	}
-	
-	
 
 }

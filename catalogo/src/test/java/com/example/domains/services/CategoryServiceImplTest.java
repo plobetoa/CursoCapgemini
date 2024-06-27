@@ -19,7 +19,6 @@ import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.CategoryRepository;
 import com.example.domains.entities.Category;
-import com.example.domains.entities.Film;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;

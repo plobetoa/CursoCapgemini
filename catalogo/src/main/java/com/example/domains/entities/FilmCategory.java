@@ -2,12 +2,9 @@ package com.example.domains.entities;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import java.sql.Timestamp;
-import java.util.Objects;
+import jakarta.validation.constraints.NotNull;
 
-import com.example.domains.core.entities.EntityBase;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.sql.Timestamp;
 
 
 /**
@@ -17,35 +14,34 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name="film_category")
 @NamedQuery(name="FilmCategory.findAll", query="SELECT f FROM FilmCategory f")
-public class FilmCategory extends EntityBase<FilmCategory> implements Serializable {
+public class FilmCategory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private FilmCategoryPK id;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@Column(name="last_update", insertable = false, updatable = false)
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Category
 	@ManyToOne
-	@JoinColumn(name="category_id", nullable=false, insertable=false, updatable=false)
-	@NotBlank
+	@JoinColumn(name="category_id", insertable=false, updatable=false)
+	@NotNull
 	private Category category;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
-	@JoinColumn(name="film_id", nullable=false, insertable=false, updatable=false)
-	@NotBlank
-	@JsonManagedReference
+	@JoinColumn(name="film_id", insertable=false, updatable=false)
+	@NotNull
 	private Film film;
 
 	public FilmCategory() {
 	}
 
 	public FilmCategory(Film film, Category category) {
-		this.id = new FilmCategoryPK(film.getFilmId(), category.getCategoryId());
-		this.film=film;
-		this.category=category;
+		this.film = film;
+		this.category = category;
+		setId(new FilmCategoryPK(film.getFilmId(), category.getCategoryId()));
 	}
 
 	public FilmCategoryPK getId() {
@@ -79,31 +75,5 @@ public class FilmCategory extends EntityBase<FilmCategory> implements Serializab
 	public void setFilm(Film film) {
 		this.film = film;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FilmCategory other = (FilmCategory) obj;
-		return Objects.equals(id, other.id);
-	}
-
-	@Override
-	public String toString() {
-		return "FilmCategory [id=" + id + ", lastUpdate=" + lastUpdate + ", category=" + category + ", film=" + film
-				+ "]";
-	}
-	
-	
-	
 
 }

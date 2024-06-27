@@ -9,6 +9,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -130,11 +131,11 @@ public class Film extends EntityBase<Film> implements Serializable {
 
 	//bi-directional many-to-one association to FilmActor
 	@OneToMany(mappedBy="film", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<FilmActor> filmActors;
+	private List<FilmActor> filmActors = new ArrayList<FilmActor>();
 
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="film", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<FilmCategory> filmCategories;
+	private List<FilmCategory> filmCategories = new ArrayList<FilmCategory>();
 
 	public Film() {
 	}
@@ -147,8 +148,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 
 
 	
-	
-
 	public Film(int filmId, int length, @Size(max = 1, min = 1) String rating, @NotBlank byte rentalDuration,
 			@NotBlank BigDecimal rentalRate, @NotBlank BigDecimal replacementCost) {
 		this.filmId = filmId;
@@ -159,6 +158,28 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.replacementCost = replacementCost;
 	}
 
+
+
+	public Film(@NotBlank @Size(max = 128) String title, @NotNull Language language, byte rentalDuration,
+			BigDecimal rentalRate,BigDecimal replacementCost) {
+		super();
+		this.title = title;
+		this.language = language;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+	}
+	
+	public Film(int filmId, @NotBlank @Size(max = 128) String title, Language language, byte rentalDuration, BigDecimal rentalRate,
+			 BigDecimal replacementCost) {
+		super();
+		this.filmId = filmId;
+		this.title = title;
+		this.language = language;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+	}
 
 
 	public int getFilmId() {
@@ -257,67 +278,57 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.languageVO = languageVO;
 	}
 
-	public List<FilmActor> getFilmActors() {
-		return this.filmActors;
-	}
+	// Gestión de actores
 
-	public void setFilmActors(List<FilmActor> filmActors) {
-		this.filmActors = filmActors;
-	}
+		public List<Actor> getActors() {
+			return this.filmActors.stream().map(item -> item.getActor()).toList();
+		}
+		public void setActors(List<Actor> source) {
+			if(filmActors == null || !filmActors.isEmpty()) clearActors();
+			source.forEach(item -> addActor(item));
+		}
+		public void clearActors() {
+			filmActors = new ArrayList<FilmActor>() ;
+		}
+		public void addActor(Actor actor) {
+			FilmActor filmActor = new FilmActor(this, actor);
+			filmActors.add(filmActor);
+		}
+		public void addActor(int actorId) {
+			addActor(new Actor(actorId));
+		}
+		public void removeActor(Actor actor) {
+			var filmActor = filmActors.stream().filter(item -> item.getActor().equals(actor)).findFirst();
+			if(filmActor.isEmpty())
+				return;
+			filmActors.remove(filmActor.get());
+		}
 
-	public FilmActor addFilmActor(Actor actor) {
-		FilmActor filmActor = new FilmActor(this,actor);
-		getFilmActors().add(filmActor);
-		return filmActor;
-	}
+		// Gestión de categorias
 
-	public FilmActor removeFilmActor(Actor actor) {
-		FilmActor filmActor = new FilmActor(this, actor);
-		getFilmActors().remove(filmActor);
-
-		return filmActor;
-	}
-	
-	public FilmActor addFilmActor(int actorId) {
-		Actor actor = new Actor(actorId);
-		return addFilmActor(actor);
-	}
-	
-	public FilmActor removeFilmActor(int actorId) {
-		Actor actor = new Actor(actorId);
-		return removeFilmActor(actor);
-	}
-
-	public List<FilmCategory> getFilmCategories() {
-		return this.filmCategories;
-	}
-
-	public void setFilmCategories(List<FilmCategory> filmCategories) {
-		this.filmCategories = filmCategories;
-	}
-
-	public FilmCategory addFilmCategory(Category item) {
-		FilmCategory filmCategory = new FilmCategory(this, item);
-		getFilmCategories().add(filmCategory);
-		return filmCategory;
-	}
-
-	public FilmCategory removeFilmCategory(Category category) {
-		FilmCategory filmCategory = new FilmCategory(this, category);
-		getFilmCategories().remove(filmCategory);
-
-		return filmCategory;
-	}
-	
-	public FilmCategory addFilmCategory(int categoryId) {
-		Category category = new Category(categoryId);
-		return addFilmCategory(category);
-	}
-	
-	public FilmCategory removeFilmCategory(int categoryId) {
-		Category category = new Category(categoryId);
-		return removeFilmCategory(category);
-	}
+		public List<Category> getCategories() {
+			return this.filmCategories.stream().map(item -> item.getCategory()).toList();
+		}
+		public void setCategories(List<Category> source) {
+			if(filmCategories == null || !filmCategories.isEmpty()) clearCategories();
+			source.forEach(item -> addCategory(item));
+		}
+		public void clearCategories() {
+			filmCategories = new ArrayList<FilmCategory>() ;
+		}
+		public void addCategory(Category item) {
+			FilmCategory filmCategory = new FilmCategory(this, item);
+			filmCategories.add(filmCategory);
+		}
+		public void addCategory(int id) {
+			addCategory(new Category(id));
+		}
+		public void removeCategory(Category ele) {
+			var filmCategory = filmCategories.stream().filter(item -> item.getCategory().equals(ele)).findFirst();
+			if(filmCategory.isEmpty())
+				return;
+			filmCategories.remove(filmCategory.get());
+		}
 
 	
 
