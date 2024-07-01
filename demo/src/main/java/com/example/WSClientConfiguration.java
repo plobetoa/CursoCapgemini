@@ -12,7 +12,7 @@ public class WSClientConfiguration {
 	@Bean
 	public Jaxb2Marshaller marshaller() {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-		marshaller.setContextPath("com.example.webservice.schema");
+		marshaller.setContextPath("com.example.webservices.schema");
 		return marshaller;
 	}
 	@Bean
