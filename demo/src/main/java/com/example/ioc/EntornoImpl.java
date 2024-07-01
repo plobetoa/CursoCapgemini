@@ -1,25 +1,23 @@
 package com.example.ioc;
 
+import org.springframework.stereotype.Service;
 
+//@Service
 public class EntornoImpl implements Entorno {
 	private int contador;
 	
-	public EntornoImpl(int contador) {
-		super();
-		this.contador = contador;
+	public EntornoImpl(int contInit) {
+		this.contador = contInit;
 	}
 
 	@Override
 	public void write(String cad) {
-		contador ++;
+		contador++;
 		System.out.println(cad);
 	}
 
-	@Override
 	public int getContador() {
 		return contador;
 	}
 	
-	
-
 }

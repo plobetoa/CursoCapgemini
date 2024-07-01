@@ -8,23 +8,21 @@ import org.springframework.context.event.EventListener;
 
 @Configuration
 public class MyConfig {
-	
 	@Value("${app.contador.init:1}")
-	int contInit;
+	int contadorInit;
+	
 	@Bean
-	int contadorInit() {
-		return contInit;
-		}
+	int contInit() { return contadorInit; }
 	
 	@Bean
 	@Scope("prototype")
-	Entorno entorno(int contadorInit) {
-		return new EntornoImpl(contadorInit);
+	Entorno entorno(@Value("${app.contador.init:1}") int contInit) {
+//	Entorno entorno(int contInit) {
+		return new EntornoImpl(contInit);
 	}
 	
 	@EventListener
-	void trataEvento(SaludaImpl.SaludaEvent evento){
-		System.err.println("Evento -> " + evento.tipo() + " -> " + evento.detinatario());
+	void trataEvento(SaludaImpl.SaludaEvent ev) {
+		System.err.println("Evento -> " + ev.tipo() + " -> " + ev.detinatario());
 	}
-
 }

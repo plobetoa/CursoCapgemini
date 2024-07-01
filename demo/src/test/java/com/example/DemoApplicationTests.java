@@ -16,17 +16,17 @@ import com.example.ioc.Saluda;
 @SpringBootTest
 @ActiveProfiles("test")
 class DemoApplicationTests {
-	
-	@TestConfiguration
-	static class Contexto{
+
+	@TestConfiguration 
+	static class Contexto {
 		@Bean
-		Saluda saluda(){
+		Saluda saluda() {
 			var simula = mock(Saluda.class);
 			when(simula.getContador()).thenReturn(666);
 			return simula;
 		}
 	}
-
+	
 	@Autowired
 	Saluda saluda;
 	

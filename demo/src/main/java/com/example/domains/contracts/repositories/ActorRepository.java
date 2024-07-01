@@ -12,21 +12,21 @@ import com.example.domains.entities.Actor;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.ActorShort;
 
-public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>, RepositoryWithProjections {
-	List<Actor> findTop5ByLastNameStartingWithOrderByFirstNameDesc(String prefix);
-	List<Actor> findTop5ByLastNameStartingWith(String prefix, Sort oderBy);
+
+public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>,
+	RepositoryWithProjections {
+	List<Actor> findTop5ByLastNameStartingWithOrderByFirstNameDesc(String prefijo);
+	List<Actor> findTop5ByLastNameStartingWith(String prefijo, Sort orderBy);
 	
 	List<Actor> findByActorIdGreaterThanEqual(int actorId);
-	
-	@Query(value= "from Actor a where a.actorId >= ?1")
+	@Query(value = "from Actor a where a.actorId >= ?1")
 	List<Actor> findByJPQL(int actorId);
-	
-	@Query(value= "select * from actor where actor_id >= ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM actor WHERE actor_id >= :id", nativeQuery = true)
 	List<Actor> findBySQL(int id);
+
+	List<ActorDTO> readByActorIdGreaterThanEqual(int actorId);
+	List<ActorShort> queryByActorIdGreaterThanEqual(int actorId);
 	
-	List<ActorDTO> searchByActorIdGreaterThanEqual(int actorId);
-	List<ActorShort> readByActorIdGreaterThanEqual(int actorId);
-	
-	<T> List<T> queryByActorIdGreaterThanEqual(int actorId, Class<T> proyeccion);
+	<T> List<T> findByActorIdGreaterThanEqual(int actorId, Class<T> proyeccion);
 
 }

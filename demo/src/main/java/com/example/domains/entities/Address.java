@@ -30,11 +30,11 @@ public class Address implements Serializable {
 	@Column(nullable=false, length=20)
 	private String district;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@Column(name="last_update", nullable=false)
 	private Timestamp lastUpdate;
 
-	@Column(nullable=false)
-	private Object location;
+//	@Column(nullable=false)
+//	private Object location;
 
 	@Column(nullable=false, length=20)
 	private String phone;
@@ -102,13 +102,13 @@ public class Address implements Serializable {
 		this.lastUpdate = lastUpdate;
 	}
 
-	public Object getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(Object location) {
-		this.location = location;
-	}
+//	public Object getLocation() {
+//		return this.location;
+//	}
+//
+//	public void setLocation(Object location) {
+//		this.location = location;
+//	}
 
 	public String getPhone() {
 		return this.phone;

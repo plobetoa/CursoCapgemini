@@ -4,6 +4,7 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -20,19 +21,18 @@ public class FilmActor implements Serializable {
 	@EmbeddedId
 	private FilmActorPK id;
 
-	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
-	
+	@Column(name="last_update", nullable=false)
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Actor
 	@ManyToOne
 	@JoinColumn(name="actor_id", nullable=false, insertable=false, updatable=false)
+	@JsonManagedReference
 	private Actor actor;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
 	@JoinColumn(name="film_id", nullable=false, insertable=false, updatable=false)
-	@JsonManagedReference
 	private Film film;
 
 	public FilmActor() {
