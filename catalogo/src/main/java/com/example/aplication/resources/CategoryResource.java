@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.CategoryService;
-import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.models.CategoryDTO;
-import com.example.domains.entities.models.LanguageDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
@@ -69,10 +67,10 @@ public class CategoryResource {
 
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody LanguageDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
-		if(id != item.getLanguageId())
+	public void update(@PathVariable int id, @Valid @RequestBody CategoryDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
+		if(id != item.getCategoryId())
 			throw new BadRequestException("No coinciden los identificadores");
-		srv.modify(LanguageDTO.from(item));
+		srv.modify(CategoryDTO.from(item));
 	}
 
 	@DeleteMapping(path = "/{id}")
