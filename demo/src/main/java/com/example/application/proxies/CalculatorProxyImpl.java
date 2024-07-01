@@ -7,12 +7,13 @@ import org.springframework.ws.soap.client.core.SoapActionCallback;
 import com.example.domains.contracts.proxies.CalculatorProxy;
 import com.example.webservices.schemas.calculator.AddRequest;
 import com.example.webservices.schemas.calculator.AddResponse;
-import com.example.webservices.schemas.calculator.DivRequest;
-import com.example.webservices.schemas.calculator.DivResponse;
-import com.example.webservices.schemas.calculator.MulRequest;
-import com.example.webservices.schemas.calculator.MulResponse;
-import com.example.webservices.schemas.calculator.SubRequest;
-import com.example.webservices.schemas.calculator.SubResponse;
+
+import com.example.webservices.schemas.calculator.DivideRequest;
+import com.example.webservices.schemas.calculator.DivideResponse;
+import com.example.webservices.schemas.calculator.MultiplyRequest;
+import com.example.webservices.schemas.calculator.MultiplyResponse;
+import com.example.webservices.schemas.calculator.SubtractRequest;
+import com.example.webservices.schemas.calculator.SubtractResponse;
 
 public class CalculatorProxyImpl extends WebServiceGatewaySupport implements CalculatorProxy {
 	private static final WebServiceMessageCallback requestCallback = new SoapActionCallback("http://example.com/webservices/schemas/calculator");
@@ -28,29 +29,29 @@ public class CalculatorProxyImpl extends WebServiceGatewaySupport implements Cal
 
 	@Override
 	public double subtract(double a, double b) {
-		var request = new SubRequest();
+		var request = new SubtractRequest();
 		request.setOp1(a);
 		request.setOp2(b);
-		var response = (SubResponse) getWebServiceTemplate().marshalSendAndReceive(request, requestCallback);
-		return response.getSubResult();
+		var response = (SubtractResponse) getWebServiceTemplate().marshalSendAndReceive(request, requestCallback);
+		return response.getSubtractResult();
 	}
 
 	@Override
 	public double multiply(double a, double b) {
-		var request = new MulRequest();
+		var request = new MultiplyRequest();
 		request.setOp1(a);
 		request.setOp2(b);
-		var response = (MulResponse) getWebServiceTemplate().marshalSendAndReceive(request, requestCallback);
-		return response.getMulResult();
+		var response = (MultiplyResponse) getWebServiceTemplate().marshalSendAndReceive(request, requestCallback);
+		return response.getMultiplyResult();
 	}
 
 	@Override
 	public double divide(double a, double b) {
-		var request = new DivRequest();
+		var request = new DivideRequest();
 		request.setOp1(a);
 		request.setOp2(b);
-		var response = (DivResponse) getWebServiceTemplate().marshalSendAndReceive(request, requestCallback);
-		return response.getDivResult();
+		var response = (DivideResponse) getWebServiceTemplate().marshalSendAndReceive(request, requestCallback);
+		return response.getDivideResult();
 	}
 
 }

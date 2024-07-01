@@ -1,4 +1,4 @@
-package com.example.application.resources;
+package com.example.aplication.resources;
 
 import java.net.URI;
 import java.util.List;
@@ -60,16 +60,6 @@ public class ActorResources {
 			throw new NotFoundException();
 		}
 		return item.get().getFilmActors().stream().map(o -> new Peli(o.getFilm().getFilmId(), o.getFilm().getTitle())).toList();
-	}
-	
-	@DeleteMapping(path = "/{id}/jubilacion")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void jubilar(@PathVariable int id) throws NotFoundException{
-		var item = srv.getOne(id);
-		if(item.isEmpty()) {
-			throw new NotFoundException();
-		}
-		item.get().jubilate();
 	}
 	
 	@PostMapping
