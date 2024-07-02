@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.aplication.resources.ActorResource.Peli;
 import com.example.domains.contracts.services.LanguageService;
 import com.example.domains.entities.models.LanguageDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -55,6 +58,19 @@ public class LanguageResource {
 		if(item.isEmpty())
 			throw new NotFoundException();
 		return LanguageDTO.from(item.get());
+	}
+	
+record Peli(int id, String titulo) {}
+	
+	@GetMapping(path = "/{id}/pelis")
+	@Transactional
+	public List<Peli> getPelis(@PathVariable int id) throws NotFoundException {
+		var item = srv.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		return item.get().getFilms().stream()
+				.map(o -> new Peli(o.getFilmId(), o.getTitle()))
+				.toList();
 	}
 		
 	@PostMapping

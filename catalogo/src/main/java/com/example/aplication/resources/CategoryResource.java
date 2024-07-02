@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.aplication.resources.ActorResource.Peli;
 import com.example.domains.contracts.services.CategoryService;
 import com.example.domains.entities.models.CategoryDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -35,40 +38,55 @@ public class CategoryResource {
 	public CategoryResource(CategoryService srv) {
 		this.srv = srv;
 	}
-	
+
 	@GetMapping
 	public List getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
-		if("short".equals(modo))
+		if ("short".equals(modo))
 			return srv.getByProjection(CategoryDTO.class);
 		else
 			return srv.getAll(); // srv.getByProjection(ActorDTO.class);
 	}
-	
+
 	@GetMapping(params = "page")
 	public Page<CategoryDTO> getAll(Pageable page) {
 		return srv.getByProjection(page, CategoryDTO.class);
 	}
-	
+
 	@GetMapping(path = "/{id}")
 	public CategoryDTO getOne(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
-		if(item.isEmpty())
+		if (item.isEmpty())
 			throw new NotFoundException();
 		return CategoryDTO.from(item.get());
 	}
-		
+
+	record Peli(int id, String titulo) {
+	}
+
+	@GetMapping(path = "/{id}/pelis")
+	@Transactional
+	public List<Peli> getPelis(@PathVariable int id) throws NotFoundException {
+		var item = srv.getOne(id);
+		if (item.isEmpty())
+			throw new NotFoundException();
+		return item.get().getFilmCategories().stream()
+				.map(o -> new Peli(o.getFilm().getFilmId(), o.getFilm().getTitle())).toList();
+	}
+
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody CategoryDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+	public ResponseEntity<Object> create(@Valid @RequestBody CategoryDTO item)
+			throws BadRequestException, DuplicateKeyException, InvalidDataException {
 		var newItem = srv.add(CategoryDTO.from(item));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-			.buildAndExpand(newItem.getCategoryId()).toUri();
+				.buildAndExpand(newItem.getCategoryId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody CategoryDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
-		if(id != item.getCategoryId())
+	public void update(@PathVariable int id, @Valid @RequestBody CategoryDTO item)
+			throws NotFoundException, InvalidDataException, BadRequestException {
+		if (id != item.getCategoryId())
 			throw new BadRequestException("No coinciden los identificadores");
 		srv.modify(CategoryDTO.from(item));
 	}
