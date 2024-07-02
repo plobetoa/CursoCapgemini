@@ -36,7 +36,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/actores/v1")
+@RequestMapping("/api/peliculas/v1")
 public class FilmResource {
 	private FilmService srv;
 
@@ -46,7 +46,7 @@ public class FilmResource {
 	
 	@GetMapping
 	public List getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
-		return srv.getByProjection(FilmDTO.class);
+		return srv.getAll();
 	}
 	
 	@GetMapping(params = "page")
@@ -62,7 +62,7 @@ public class FilmResource {
 		return FilmDTO.from(item.get());
 	}
 	
-	@GetMapping(path = "/{id}/actor")
+	@GetMapping(path = "/{id}/actores")
 	@Transactional
 	public List<Actor> getActor(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import com.example.domains.entities.Film;
+import com.example.domains.entities.Film.Rating;
 import com.example.domains.entities.Language;
 
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class FilmDTO implements Serializable {
     private String description;
     private Timestamp lastUpdate;
     private int length;
-    private String rating;
+    private Rating rating;
     private Short releaseYear;
     private byte rentalDuration;
     private BigDecimal rentalRate;

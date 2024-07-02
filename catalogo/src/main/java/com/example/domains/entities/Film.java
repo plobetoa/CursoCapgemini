@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 import com.example.domains.core.entities.EntityBase;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -92,7 +94,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	private int length;
 
 	@Convert(converter = RatingConverter.class)
-	private String rating;
+	private Rating rating;
 
 	@Column(name="release_year")
 	private Short releaseYear;
@@ -127,6 +129,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	//bi-directional many-to-one association to Language
 	@ManyToOne
 	@JoinColumn(name="original_language_id")
+	@JsonIgnore
 	private Language languageVO;
 
 	//bi-directional many-to-one association to FilmActor
@@ -134,6 +137,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	private List<FilmActor> filmActors = new ArrayList<FilmActor>();
 
 	//bi-directional many-to-one association to FilmCategory
+	
 	@OneToMany(mappedBy="film", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<FilmCategory> filmCategories = new ArrayList<FilmCategory>();
 
@@ -148,7 +152,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 
 
 	
-	public Film(int filmId, int length, @Size(max = 1, min = 1) String rating, @NotBlank byte rentalDuration,
+	public Film(int filmId, int length, Rating rating, @NotBlank byte rentalDuration,
 			@NotBlank BigDecimal rentalRate, @NotBlank BigDecimal replacementCost) {
 		this.filmId = filmId;
 		this.length = length;
@@ -214,11 +218,11 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.length = length;
 	}
 
-	public String getRating() {
+	public Rating getRating() {
 		return this.rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
 
