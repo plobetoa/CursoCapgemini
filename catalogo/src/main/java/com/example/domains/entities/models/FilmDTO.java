@@ -3,7 +3,10 @@ package com.example.domains.entities.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
+import com.example.domains.entities.Actor;
+import com.example.domains.entities.Category;
 import com.example.domains.entities.Film;
 import com.example.domains.entities.Film.Rating;
 import com.example.domains.entities.Language;
@@ -28,6 +31,9 @@ public class FilmDTO implements Serializable {
     private BigDecimal replacementCost;
     private String title;
     private Language language;
+    private Language languageVO;
+    private List<ActorDTO> actores;
+    private List<CategoryDTO> categories;
 
     public static FilmDTO from(Film source) {
         return new FilmDTO(
@@ -41,7 +47,10 @@ public class FilmDTO implements Serializable {
             source.getRentalRate(),
             source.getReplacementCost(),
             source.getTitle(),
-            source.getLanguage()
+            source.getLanguage(),
+            source.getLanguageVO(),
+            source.getActors().stream().map(o -> ActorDTO.from(o)).toList(),
+            source.getCategories().stream().map(o -> CategoryDTO.from(o)).toList()
         );
     }
 
@@ -59,6 +68,9 @@ public class FilmDTO implements Serializable {
         film.setLength(source.getLength());
         film.setRating(source.getRating());
         film.setReleaseYear(source.getReleaseYear());
+        film.setActors(source.getActores().stream().map(o -> ActorDTO.from(o)).toList());
+        film.setCategories(source.getCategories().stream().map(o -> CategoryDTO.from(o)).toList());
+        film.setLanguageVO(source.getLanguageVO());
         return film;
     }
 }

@@ -72,6 +72,17 @@ record Peli(int id, String titulo) {}
 				.map(o -> new Peli(o.getFilmId(), o.getTitle()))
 				.toList();
 	}
+	
+	@GetMapping(path = "/{id}/pelisVO")
+	@Transactional
+	public List<Peli> getPelisVO(@PathVariable int id) throws NotFoundException {
+		var item = srv.getOne(id);
+		if(item.isEmpty())
+			throw new NotFoundException();
+		return item.get().getFilmsVO().stream()
+				.map(o -> new Peli(o.getFilmId(), o.getTitle()))
+				.toList();
+	}
 		
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody LanguageDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {

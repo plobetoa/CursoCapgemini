@@ -9,8 +9,6 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import com.example.domains.contracts.proxies.CalculatorProxy;
-import com.example.webservices.schemas.calculator.AddRequest;
-import com.example.webservices.schemas.calculator.AddResponse;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -27,7 +25,7 @@ public class DemoApplication implements CommandLineRunner {
 		System.err.println("Aplicación arrancada...");
 //		srv.getByProjection(ActorDTO.class).forEach(System.out::println);
 	}
-	
+//	
 //	@Bean
 //	CommandLineRunner lookup(CalculatorProxy client) {
 //		return args -> { System.err.println("CalculatorProxy --> " + client.add(2, 3)); };

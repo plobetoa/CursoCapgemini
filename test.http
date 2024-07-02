@@ -1,4 +1,246 @@
+### Actores
+
+get http://localhost:8080/api/actores/v1?page=1
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/actores/v1?modo=kk
+Accept: application/xml
+
+###
+
+get http://localhost:8080/api/actores/v1/205
+Accept: application/pdf,application/json
+
+
+###
+
+post http://localhost:8080/api/actores/v1
+Content-Type: application/json
+
+{
+  "firstName": "Servicio",
+  "lastName": "Rest"
+}
+
+###
+
+put http://localhost:8080/api/actores/v1/205
+Content-Type: application/json
+
+{
+  "actorId": 204,
+  "firstName": "aaaaa",
+  "lastName": "Rest"
+}
+
+###
+
+DELETE http://localhost:8080/api/actores/v1/205
+
+###
+
+get http://localhost:8080/api/actores/v1/205
 
 
 
-get http://localhost:8001/api/actores/v1/1
+
+
+
+
+### Language
+
+get http://localhost:8080/api/language/v1?page=1
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/language/v1?modo=kk
+Accept: application/xml
+
+###
+
+get http://localhost:8080/api/language/v1/7
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/language/v1/1/pelis
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/language/v1/1/pelisVO
+Accept: application/pdf,application/json
+
+
+
+###
+
+post http://localhost:8080/api/language/v1
+Content-Type: application/json
+
+{
+  "name": "Spanish"
+}
+
+### 
+
+put http://localhost:8080/api/language/v1/7
+Content-Type: application/json
+
+{
+  "languageId": 7,
+  "name": "spanish"
+}
+
+###
+
+DELETE http://localhost:8080/api/language/v1/7
+
+###
+
+get http://localhost:8080/api/language/v1/7
+
+
+
+
+
+
+### Category
+
+get http://localhost:8080/api/category/v1?page=1
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/category/v1?modo=kk
+Accept: application/xml
+
+###
+
+get http://localhost:8080/api/category/v1/7
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/category/v1/4/pelis
+Accept: application/pdf,application/json
+
+
+
+###
+
+post http://localhost:8080/api/category/v1
+Content-Type: application/json
+
+{
+  "name": "Spanish"
+}
+
+### 
+
+put http://localhost:8080/api/category/v1/17
+Content-Type: application/json
+
+{
+  "categoryId": 17,
+  "name": "pop japanese"
+}
+
+###
+
+DELETE http://localhost:8080/api/category/v1/18
+
+###
+
+get http://localhost:8080/api/category/v1/17
+
+
+
+
+
+### Film
+
+get http://localhost:8080/api/peliculas/v1?page=52
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/peliculas/v1?modo=kk
+Accept: application/xml
+
+###
+
+get http://localhost:8080/api/peliculas/v1/7
+Accept: application/pdf,application/json
+
+
+###
+
+get http://localhost:8080/api/peliculas/v1/1/idioma
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/peliculas/v1/1/actores
+Accept: application/pdf,application/json
+
+###
+
+get http://localhost:8080/api/peliculas/v1/1/categoria
+Accept: application/pdf,application/json
+
+
+
+###
+ post http://localhost:8080/api/peliculas/v1
+Accept: application/json
+
+{
+        "filmId": 0,
+        "description": "A new film description",
+        "lastUpdate": "2023-07-02T10:00:00Z",
+        "length": 120,
+        "rating": "PG",
+        "releaseYear": 2023,
+        "rentalDuration": 5,
+        "rentalRate": 4.99,
+        "replacementCost": 19.99,
+        "title": "New Film Title",
+        "language": {
+            "languageId": 1,
+            "name": "English"
+        },
+        "languageVO": {
+            "languageId": 1,
+            "name" : "English"
+        },
+        "actor": [
+           {
+                "actorId": 1
+            }
+        ],
+        "category": [
+            {
+                "categoryId": 1
+            }
+        ]    
+}
+### 
+
+put http://localhost:8080/api/peliculas/v1/17
+Content-Type: application/json
+
+{
+  
+}
+
+###
+
+DELETE http://localhost:8080/api/peliculas/v1/18
+
+###
+
+get http://localhost:8080/api/peliculas/v1/17

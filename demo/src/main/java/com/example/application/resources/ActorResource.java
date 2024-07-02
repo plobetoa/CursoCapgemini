@@ -1,7 +1,8 @@
-package com.example.aplication.resources;
+package com.example.application.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,99 +21,102 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.domains.contracts.services.ActorService;
-import com.example.domains.contracts.services.FilmService;
 import com.example.domains.entities.Actor;
-import com.example.domains.entities.Category;
-import com.example.domains.entities.Film;
-import com.example.domains.entities.Language;
 import com.example.domains.entities.models.ActorDTO;
 import com.example.domains.entities.models.ActorShort;
-import com.example.domains.entities.models.FilmDTO;
 import com.example.exceptions.BadRequestException;
 import com.example.exceptions.DuplicateKeyException;
 import com.example.exceptions.InvalidDataException;
 import com.example.exceptions.NotFoundException;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/peliculas/v1")
-public class FilmResource {
-	private FilmService srv;
+@RequestMapping("/api/actores/v1")
+public class ActorResource {
+	private ActorService srv;
 
-	public FilmResource(FilmService srv) {
+	public ActorResource(ActorService srv) {
 		this.srv = srv;
 	}
 	
 	@GetMapping
 	public List getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
-		return srv.getAll();
+		if("short".equals(modo))
+			return srv.getByProjection(ActorShort.class);
+		else
+			return srv.getAll(); // srv.getByProjection(ActorDTO.class);
 	}
 	
 	@GetMapping(params = "page")
-	public Page<FilmDTO> getAll(Pageable page) {
-		return srv.getByProjection(page, FilmDTO.class);
+	public Page<ActorShort> getAll(Pageable page) {
+		return srv.getByProjection(page, ActorShort.class);
 	}
 	
 	@GetMapping(path = "/{id}")
-	public FilmDTO getOne(@PathVariable int id) throws NotFoundException {
+	public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return FilmDTO.from(item.get());
+		return ActorDTO.from(item.get());
 	}
 	
-	@GetMapping(path = "/{id}/actores")
-	@Transactional
-	public List<Actor> getActor(@PathVariable int id) throws NotFoundException {
-		var item = srv.getOne(id);
-		if(item.isEmpty())
-			throw new NotFoundException();
-		return item.get().getActors();
+	@GetMapping(path = "/{id}/v2")
+	public Optional<Actor> getOneV2(@PathVariable int id) {
+		return srv.getOne(id);
 	}
 	
-	@GetMapping(path = "/{id}/categoria")
-	@Transactional
-	public List<Category> getCategoria(@PathVariable int id) throws NotFoundException {
+	@GetMapping(path = "/{id}/v3")
+	public ResponseEntity<Actor> getOneV3(@PathVariable int id) {
+		return ResponseEntity.of(srv.getOne(id));
+	}
+	@GetMapping(path = "/{id}/v4")
+	public ResponseEntity<ActorDTO> getOneV4(@PathVariable int id) throws NotFoundException {
+		// return ResponseEntity.of(srv.getOne(id));
 		var item = srv.getOne(id);
 		if(item.isEmpty())
-			throw new NotFoundException();
-		return item.get().getCategories();
+			return ResponseEntity.notFound().build();
+		return ResponseEntity.ok().body(ActorDTO.from(item.get()));
 	}
 	
-	@GetMapping(path = "/{id}/idioma")
+	record Peli(int id, String titulo) {}
+	
+	@GetMapping(path = "/{id}/pelis")
 	@Transactional
-	public Language getLanguage(@PathVariable int id) throws NotFoundException {
+	public List<Peli> getPelis(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return item.get().getLanguage();
+		return item.get().getFilmActors().stream()
+				.map(o -> new Peli(o.getFilm().getFilmId(), o.getFilm().getTitle()))
+				.toList();
 	}
 	
-	@GetMapping(path = "/{id}/vo")
-	@Transactional
-	public Language getLanguageVO(@PathVariable int id) throws NotFoundException {
+	@DeleteMapping(path = "/{id}/jubilacion")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public void jubilar(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
-		return item.get().getLanguageVO();
+		item.get().jubilate();
 	}
-		
+	
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody FilmDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
-		var newItem = srv.add(FilmDTO.from(item));
+	public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		var newItem = srv.add(ActorDTO.from(item));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-			.buildAndExpand(newItem.getFilmId()).toUri();
+			.buildAndExpand(newItem.getActorId()).toUri();
 		return ResponseEntity.created(location).build();
 	}
 
 	@PutMapping(path = "/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable int id, @Valid @RequestBody FilmDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
-		if(id != item.getFilmId())
+	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
+		if(id != item.getActorId())
 			throw new BadRequestException("No coinciden los identificadores");
-		srv.modify(FilmDTO.from(item));
+		srv.modify(ActorDTO.from(item));
 	}
 
 	@DeleteMapping(path = "/{id}")
