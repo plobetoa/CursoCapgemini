@@ -129,6 +129,36 @@ class CategoryResourceTest {
 	        .andDo(print())
 	        ;
 	}
+	
+	@Test
+	void testModify() throws Exception {
+		int id = 1;
+		var ele = new Category(id, "Drana");
+		when(srv.add(ele)).thenReturn(ele);
+		mockMvc.perform(put("/api/category/v1/1")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
+			)
+			.andExpect(status().isNoContent())
+	        .andDo(print())
+	        ;
+	}
+	
+	@Test
+	void testModify400() throws Exception {
+		int id = 1;
+		var ele = new Category(id, "Drana");
+		when(srv.add(ele)).thenReturn(ele);
+		mockMvc.perform(put("/api/category/v1/2")
+			.contentType(MediaType.APPLICATION_JSON)
+			.content(objectMapper.writeValueAsString(CategoryDTO.from(ele)))
+			)
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.title").value("Bad Request"))
+			.andExpect(jsonPath("$.detail").value("No coinciden los identificadores"))
+	        .andDo(print())
+	        ;
+	}
 
 
 }

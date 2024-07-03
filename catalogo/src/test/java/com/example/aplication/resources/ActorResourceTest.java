@@ -1,6 +1,5 @@
 package com.example.aplication.resources;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -69,13 +68,7 @@ class ActorResourceTest {
 					status().isOk(), 
 					content().contentType("application/json"),
 					jsonPath("$.size()").value(3)
-					);
-//		mvc.perform(get("/api/actores/v1").accept(MediaType.APPLICATION_XML))
-//			.andExpectAll(
-//					status().isOk(), 
-//					content().contentType("application/json"),
-//					jsonPath("$.size()").value(3)
-//					);
+			);
 	}
 
 	@Test
@@ -133,16 +126,5 @@ class ActorResourceTest {
 	        .andDo(print())
 	        ;
 	}
-
-//
-//	@Test
-//	void testUpdate() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	void testDelete() {
-//		fail("Not yet implemented");
-//	}
 
 }
