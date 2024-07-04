@@ -13,6 +13,9 @@ import com.example.domains.core.entities.EntityBase;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 /**
  * The persistent class for the category database table.
@@ -21,25 +24,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="category")
 @NamedQuery(name="Category.findAll", query="SELECT c FROM Category c")
+@Schema(name = "Entidad de la categoria", description = "Información completa de la categoria")
 public class Category extends EntityBase<Category> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="category_id", unique=true, nullable=false)
+	@Schema(description = "Identificador de la categoria")
 	private int categoryId;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@Schema(description = "Ultima actualización de la información" )
 	private Timestamp lastUpdate;
 
 	@Column(nullable=false, length=25)
 	@NotBlank
 	@Size(max=25, min=2)
+	@Schema(description = "Nombre de la caregoría")
 	private String name;
 
 	//bi-directional many-to-one association to FilmCategory
 	@OneToMany(mappedBy="category")
 	@JsonBackReference
+	@ArraySchema(arraySchema = @Schema(description = "Lista de peliculas en las que el actor participo"))
 	private List<FilmCategory> filmCategories;
 
 	public Category() {

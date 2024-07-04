@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 /**
  * The persistent class for the film_category database table.
@@ -14,6 +16,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="film_category")
 @NamedQuery(name="FilmCategory.findAll", query="SELECT f FROM FilmCategory f")
+@Schema(name = "Relacion entre pelicula y categoría")
 public class FilmCategory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
