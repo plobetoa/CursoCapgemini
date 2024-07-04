@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 /**
  * The persistent class for the film_actor database table.
@@ -13,23 +15,28 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="film_actor")
 @NamedQuery(name="FilmActor.findAll", query="SELECT f FROM FilmActor f")
+@Schema(name = "Relacion entre pelicula y actor")
 public class FilmActor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
+	@Schema(description = "Identificador de la relación")
 	private FilmActorPK id;
 
 	@Column(name="last_update", insertable = false, updatable = false)
+	@Schema(description = "Ultima actualización de la información, formato: yyyy-MM-dd hh:mm:ss")
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Actor
 	@ManyToOne
 	@JoinColumn(name="actor_id", insertable=false, updatable=false)
+	@Schema(description = "Actor de la relación")
 	private Actor actor;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
 	@JoinColumn(name="film_id", insertable=false, updatable=false)
+	@Schema(description = "Pelicula de la relación")
 	private Film film;
 
 	public FilmActor() {
