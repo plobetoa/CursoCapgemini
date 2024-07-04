@@ -55,7 +55,8 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	//bi-directional many-to-one association to FilmActor
 	@OneToMany(mappedBy="actor", fetch = FetchType.EAGER)
 	@JsonBackReference
-	@ArraySchema(arraySchema = @Schema(description = "Lista de peliculas en las que el actor participo"))
+	@ArraySchema(arraySchema = @Schema(description = "Lista de relacion entre pelicula y actor"), 
+		schema = @Schema(description = "Relación entre pelicula y actor", implementation = FilmActor.class))
 	private List<FilmActor> filmActors;
 
 	public Actor() {

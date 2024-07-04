@@ -20,23 +20,23 @@ public class FilmActor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	@Schema(description = "Identificador de la relación")
+	@Schema(description = "Identificador de la relación", implementation = FilmActorPK.class)
 	private FilmActorPK id;
 
 	@Column(name="last_update", insertable = false, updatable = false)
-	@Schema(description = "Ultima actualización de la información, formato: yyyy-MM-dd hh:mm:ss")
+	@Schema(description = "Ultima actualización de la información")
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Actor
 	@ManyToOne
 	@JoinColumn(name="actor_id", insertable=false, updatable=false)
-	@Schema(description = "Actor de la relación")
+	@Schema(description = "Actor de la relación", implementation = Actor.class)
 	private Actor actor;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
 	@JoinColumn(name="film_id", insertable=false, updatable=false)
-	@Schema(description = "Pelicula de la relación")
+	@Schema(description = "Pelicula de la relación", implementation = Film.class)
 	private Film film;
 
 	public FilmActor() {

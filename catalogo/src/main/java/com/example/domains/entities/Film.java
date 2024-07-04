@@ -125,12 +125,13 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="language_id", nullable=false)
 	@NotNull
+	@JsonManagedReference
 	private Language language;
 
 	//bi-directional many-to-one association to Language
 	@ManyToOne
 	@JoinColumn(name="original_language_id")
-	@JsonIgnore
+	@JsonManagedReference
 	private Language languageVO;
 
 	//bi-directional many-to-one association to FilmActor

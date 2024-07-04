@@ -13,6 +13,9 @@ import com.example.domains.core.entities.EntityBase;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 /**
  * The persistent class for the language database table.
@@ -21,30 +24,36 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="language")
 @NamedQuery(name="Language.findAll", query="SELECT l FROM Language l")
+@Schema(name = "Entidad del idioma")
 public class Language extends EntityBase<Language> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="language_id", unique=true, nullable=false)
+	@Schema(description = "Identificador único del idioma", example = "1")
 	private int languageId;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
+	@Schema(description = "Marca de tiempo de la última actualización")
 	private Timestamp lastUpdate;
 
 	@Column(nullable=false, length=20)
 	@NotBlank
 	@Size(max=20, min=2)
+	@Schema(description = "Nombre del idioma", example = "Inglés", required = true)
 	private String name;
 
-	//bi-directional many-to-one association to Film
+	// Asociación bidireccional muchos-a-uno a Film
 	@OneToMany(mappedBy="language")
-	@JsonIgnore
+	@JsonBackReference
+	@ArraySchema(arraySchema = @Schema(description = "Lista de peliculas con version en este idioma"),schema = @Schema(description = "Pelicula en este idioma", implementation = Film.class))
 	private List<Film> films;
 
-	//bi-directional many-to-one association to Film
+	// Asociación bidireccional muchos-a-uno a Film
 	@OneToMany(mappedBy="languageVO")
-	@JsonIgnore
+	@JsonBackReference
+	@ArraySchema(arraySchema = @Schema(description = "Lista de peliculas con version original en este idioma"), schema = @Schema(description = "Pelicula en la versión original del idioma", implementation = Film.class))
 	private List<Film> filmsVO;
 
 	public Language() {

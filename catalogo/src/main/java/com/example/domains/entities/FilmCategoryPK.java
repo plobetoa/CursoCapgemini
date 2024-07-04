@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.example.domains.core.entities.EntityBase;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 /**
@@ -11,14 +12,17 @@ import jakarta.persistence.*;
  * 
  */
 @Embeddable
+@Schema(name = "Identificador de la relación pelicula-categoría")
 public class FilmCategoryPK extends EntityBase<FilmCategoryPK> implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="film_id", insertable=false, updatable=false, unique=true, nullable=false)
+	@Schema(description = "Identificador de la pelicula")
 	private int filmId;
 
 	@Column(name="category_id", insertable=false, updatable=false, unique=true, nullable=false)
+	@Schema(description = "Identificador de la categoría")
 	private int categoryId;
 
 	public FilmCategoryPK() {

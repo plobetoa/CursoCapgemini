@@ -21,21 +21,25 @@ public class FilmCategory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
+	@Schema(description = "Identificador de la relación")
 	private FilmCategoryPK id;
 
 	@Column(name="last_update", insertable = false, updatable = false)
+	@Schema(description = "Ultima actualización de la información, formato: yyyy-MM-dd hh:mm:ss")
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to Category
 	@ManyToOne
 	@JoinColumn(name="category_id", insertable=false, updatable=false)
 	@NotNull
+	@Schema(description = "Categoría de la relación")
 	private Category category;
 
 	//bi-directional many-to-one association to Film
 	@ManyToOne
 	@JoinColumn(name="film_id", insertable=false, updatable=false)
 	@NotNull
+	@Schema(description = "Pelicula de la relación")
 	private Film film;
 
 	public FilmCategory() {
