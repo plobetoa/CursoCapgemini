@@ -52,6 +52,9 @@ class ActorRepositoryMemoryTest {
 	}
 
 	
-	
+	@Test
+	void findBySQLTest() {
+		assertThat(dao.findBySQL(1).size()).isGreaterThan(0);
+	}
 
 }

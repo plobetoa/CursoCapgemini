@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.example.domains.entities.models.PelisDto;
 
-@FeignClient(name = "CATALOGO-SERVICE" /*, url = "http://localhost:8010"*/)
+@FeignClient(name = "CATALOGO-SERVICE" , url = "http://localhost:8080")
 public interface CatalogoProxy {
 	@GetMapping(path = "/")
 	String getCatalogo();

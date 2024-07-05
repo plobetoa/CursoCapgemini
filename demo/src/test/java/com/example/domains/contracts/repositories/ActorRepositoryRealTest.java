@@ -24,5 +24,10 @@ class ActorRepositoryRealTest {
 	void findTop5ByLastNameStartingWithOrderByFirstNameDescTest() {
 		assertThat(dao.findTop5ByLastNameStartingWithOrderByFirstNameDesc("P").size()).isEqualTo(5);
 	}
+	
+	@Test
+	void findBySQLTest() {
+		assertThat(dao.findBySQL(1).size()).isGreaterThan(0);
+	}
 
 }

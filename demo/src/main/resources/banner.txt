@@ -1,10 +1,7 @@
+    //   ) ) / /        // | | ${application.title} ${application.version}
+   //___/ / / /        //__| | 
+  / ____ / / /        / ___  | 
+ //       / /        //    | | 
+//       / /____/ / //     | | 
 
-    ___________      _________         ----------------------------------------------------------------------------------------------------
-   |           \    /         \       | Application | ${info.app.name} (${info.app.version})
-   |_____       \  /       _   \      |             | ${info.app.description}
-         |       \/       | \   \     | Profile     | ${spring.profiles.active:DEFAULT}
-         |                |__\   \    | Java VM     | ${java.specification.vendor} ${java.specification.version} (v${java.version})
-  ___    |    |\    /|     ___    \   | Spring Boot |${spring-boot.formatted-version}
- |   |___|    | \  / |    |   \    \  | Process ID  | ${PID}
- |____________|  \/  |____|    \____\  ----------------------------------------------------------------------------------------------------
-                                      Copyright © All rights reserved.
+Powered by Spring Boot ${spring-boot.version}
