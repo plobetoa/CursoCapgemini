@@ -1,11 +1,15 @@
 package com.example;
 
 import java.math.BigDecimal;
+import java.util.TreeMap;
 
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 
 import com.example.domains.contracts.repositories.FilmRepository;
 import com.example.domains.contracts.services.FilmService;
@@ -29,6 +33,7 @@ import jakarta.transaction.Transactional;
         )
 )
 @SpringBootApplication
+@EnableFeignClients("com.example.application.proxies")
 public class CatalogoApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
@@ -42,5 +47,13 @@ public class CatalogoApplication implements CommandLineRunner {
 		System.err.println("Aplicación arrancada...");
 
 	}
+	
+	@Bean
+    OpenApiCustomizer sortSchemasAlphabetically() {
+        return openApi -> {
+            var schemas = openApi.getComponents().getSchemas();
+            openApi.getComponents().setSchemas(new TreeMap<>(schemas));
+        };
+    }
 
 }
