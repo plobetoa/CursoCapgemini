@@ -13,6 +13,7 @@ import { MyCoreModule } from '@my/core';
   styleUrl: './demos.component.css'
 })
 export class DemosComponent implements OnInit, OnDestroy {
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   private nombre: string = 'mundo'
   fecha = '2024-07-11'
   fontSize = 24
