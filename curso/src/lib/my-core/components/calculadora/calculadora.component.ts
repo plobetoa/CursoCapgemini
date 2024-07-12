@@ -36,8 +36,8 @@ export class CalculadoraComponent {
       
     } else if (this.operator) {
       const result = this.doCalculation(this.operator, parseFloat(this.currentNumber.replace(',', '.')));
-      this.currentNumber = String(result).replace('.', ',');
-      this.firstOperand = result;
+      this.currentNumber = String(result.toFixed(20)).replace('.', ',');
+      this.firstOperand = Number(result.toFixed(20));
     }
     this.operator = op;
     this.waitForSecondNumber = true;
@@ -84,7 +84,7 @@ export class CalculadoraComponent {
       this.currentDisplay = this.currentNumber.replace('.', ',');
     }
     else{
-      this.currentDisplay = this.operator ? `${this.firstOperand} ${this.operator} ${this.currentNumber}` : this.currentNumber;
+      this.currentDisplay = this.operator ? `${this.firstOperand}`.replace('.',',') + `${this.operator} ${this.currentNumber}` : this.currentNumber;
     }
   }
 }

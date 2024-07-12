@@ -19,7 +19,7 @@ export class DashboardComponent {
     {texto: 'inicio', icono: '', componente: HomeComponent},
     {texto: 'demos', icono: '', componente: DemosComponent},
     {texto: 'grafico', icono: '', componente: GraficoSvgComponent},
-    {texto: 'calculadora', icono: '', componente: CalculadoraComponent},
+    {texto: 'calculadora', icono: '\uF1E0', componente: CalculadoraComponent},
   ]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   actual: any = this.menu[3].componente

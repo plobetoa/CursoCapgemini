@@ -53,7 +53,7 @@
   button.equals {
     background-color: #f1a33c;
     color: white;
-    grid-column: span 2; /* Hace que el botón "=" ocupe dos columnas */
+    grid-row: span 2; /* Hace que el botón "=" ocupe dos columnas */
   }
   
   button.clear {
