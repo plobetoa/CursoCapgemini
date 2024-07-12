@@ -1,0 +1,30 @@
+<div class="calculator">
+    <input class="calculator-screen" type="text" [value]="currentDisplay" disabled />
+  
+    <div class="calculator-keys">
+      <button class="clear" (click)="clear()">AC</button>
+      <button class="operator" (click)="toggleSign()">±</button>
+      <button class="operator" (click)="percentage()">%</button>
+      <button class="operator" (click)="getOperation('/')">÷</button>
+  
+      <button class="number" (click)="getNumber('7')">7</button>
+      <button class="number" (click)="getNumber('8')">8</button>
+      <button class="number" (click)="getNumber('9')">9</button>
+      <button class="operator" (click)="getOperation('*')">×</button>
+  
+      <button class="number" (click)="getNumber('4')">4</button>
+      <button class="number" (click)="getNumber('5')">5</button>
+      <button class="number" (click)="getNumber('6')">6</button>
+      <button class="operator" (click)="getOperation('-')">−</button>
+  
+      <button class="number" (click)="getNumber('1')">1</button>
+      <button class="number" (click)="getNumber('2')">2</button>
+      <button class="number" (click)="getNumber('3')">3</button>
+      <button class="operator" (click)="getOperation('+')">+</button>
+  
+      <button class="number" (click)="getNumber('0')" style="grid-column: span 2;">0</button>
+      <button class="number" (click)="getDecimal()">,</button>
+      <button class="equals" (click)="getOperation('=')">=</button>
+    </div>
+  </div>
+  
