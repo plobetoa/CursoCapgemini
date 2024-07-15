@@ -5,6 +5,8 @@ import GraficoSvgComponent from 'src/lib/my-core/components/grafico-svg/grafico-
 import { NotificationComponent } from "../../main/notification/notification.component";
 import { CommonModule } from '@angular/common';
 import { CalculadoraComponent } from '@my/core';
+import { FormularioComponent } from '../formulario/formulario.component';
+import { ContactosComponent } from 'src/app/contactos';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,13 +18,15 @@ import { CalculadoraComponent } from '@my/core';
 export class DashboardComponent {
 
   menu = [
-    {texto: 'inicio', icono: '', componente: HomeComponent},
-    {texto: 'demos', icono: '', componente: DemosComponent},
-    {texto: 'grafico', icono: '', componente: GraficoSvgComponent},
-    {texto: 'calculadora', icono: '\uF1E0', componente: CalculadoraComponent},
+    {texto: 'formulario', icono: 'fa-solid fa-person-chalkboard', componente: FormularioComponent},
+    {texto: 'inicio', icono: 'fa-solid fa-house', componente: HomeComponent},
+    {texto: 'demos', icono: 'fa-solid fa-person-chalkboard', componente: DemosComponent},
+    {texto: 'grafico', icono: 'fa-solid fa-image', componente: GraficoSvgComponent},
+    {texto: 'calculadora', icono: 'fa-solid fa-calculator', componente: CalculadoraComponent},
+    {texto: 'contactos', icono: 'fa-solid fa-address-book', componente: ContactosComponent},
   ]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  actual: any = this.menu[3].componente
+  actual: any = this.menu[0].componente
 
   seleccionar(indice: number){
     this.actual = this.menu[indice].componente
