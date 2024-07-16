@@ -7,11 +7,13 @@ import { CommonModule } from '@angular/common';
 import { CalculadoraComponent } from '@my/core';
 import { FormularioComponent } from '../formulario/formulario.component';
 import { ContactosComponent } from 'src/app/contactos';
+import { HeaderComponent } from "../../main/header/header.component";
+import { FooterComponent } from "../../main/footer/footer.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NotificationComponent, CommonModule],
+  imports: [NotificationComponent, CommonModule, HeaderComponent, FooterComponent, HeaderComponent, FooterComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
