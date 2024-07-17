@@ -1,11 +1,11 @@
 ### Actores
 
-get http://localhost:8080/api/actores/v1?page=1
+get http://localhost:8080/actores/v1?page=1
 Accept: application/pdf,application/json
 
 ###
 
-get http://localhost:8080/api/actores/v1?modo=kk
+get http://localhost:8080/actores/v1?modo=kk
 Accept: application/xml
 
 ###
@@ -110,7 +110,7 @@ get http://localhost:8080/api/language/v1/7
 
 ### Category
 
-get http://localhost:8080/api/category/v1?page=1
+get http://localhost:8080/api/categorias/v1
 Accept: application/pdf,application/json
 
 ###

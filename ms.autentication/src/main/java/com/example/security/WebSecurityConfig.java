@@ -20,8 +20,8 @@ public class WebSecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
-//		config.setAllowCredentials(true);
-//		config.addAllowedOrigin("http://localhost:4200");
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("http://localhost:4200");
 		config.setAllowCredentials(false);
 		config.addAllowedOrigin("*");
 		config.addAllowedHeader("*");

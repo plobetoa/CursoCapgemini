@@ -3,8 +3,10 @@ package com.example.aplication.resources;
 import java.net.URI;
 import java.util.List;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,9 +31,8 @@ import com.example.exceptions.NotFoundException;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-
 @RestController
-@RequestMapping("/api/actores/v1")
+@RequestMapping("/actores")
 public class ActorResource {
 	private ActorService srv;
 
@@ -39,20 +40,27 @@ public class ActorResource {
 		this.srv = srv;
 	}
 	
-	@GetMapping
-	public List getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
+	@GetMapping(path = "/v1")
+	public List<?> getAll(@RequestParam(required = false, defaultValue = "largo") String modo) {
 		if("short".equals(modo))
-			return srv.getByProjection(ActorShort.class);
+			return (List<?>) srv.getByProjection(Sort.by("firstName", "lastName"), ActorShort.class);
 		else
-			return srv.getAll(); 
+			return (List) srv.getByProjection(Sort.by("firstName", "lastName"), ActorDTO.class); // srv.getAll();;
 	}
 	
-	@GetMapping(params = "page")
-	public Page<ActorShort> getAll(Pageable page) {
+	@GetMapping(path = "/v2")
+	public List<ActorDTO> getAllv2(@RequestParam(required = false) String sort) {
+		if (sort != null)
+			return (List<ActorDTO>) srv.getByProjection(Sort.by(sort), ActorDTO.class);
+		return srv.getByProjection(ActorDTO.class);
+	}
+	
+	@GetMapping(path = { "/v1", "/v2" }, params = "page")
+	public Page<ActorShort> getAll(@ParameterObject Pageable page) {
 		return srv.getByProjection(page, ActorShort.class);
 	}
 	
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = { "/v1/{id}", "/v2/{id}" })
 	public ActorDTO getOne(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
@@ -62,7 +70,7 @@ public class ActorResource {
 	
 	record Peli(int id, String titulo) {}
 	
-	@GetMapping(path = "/{id}/pelis")
+	@GetMapping(path = {"/v1/{id}/pelis","/v2/{id}/pelis"})
 	@Transactional
 	public List<Peli> getPelis(@PathVariable int id) throws NotFoundException {
 		var item = srv.getOne(id);
@@ -72,8 +80,8 @@ public class ActorResource {
 				.map(o -> new Peli(o.getFilm().getFilmId(), o.getFilm().getTitle()))
 				.toList();
 	}
-		
-	@PostMapping
+	
+	@PostMapping(path = { "/v1", "/v2" })
 	public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
 		var newItem = srv.add(ActorDTO.from(item));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -81,7 +89,7 @@ public class ActorResource {
 		return ResponseEntity.created(location).build();
 	}
 
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = { "/v1/{id}", "/v2/{id}" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void update(@PathVariable int id, @Valid @RequestBody ActorDTO item) throws NotFoundException, InvalidDataException, BadRequestException {
 		if(id != item.getActorId())
@@ -89,7 +97,7 @@ public class ActorResource {
 		srv.modify(ActorDTO.from(item));
 	}
 
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = { "/v1/{id}", "/v2/{id}" })
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable int id) {
 		srv.deleteById(id);
