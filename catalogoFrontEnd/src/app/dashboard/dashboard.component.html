@@ -1,0 +1,11 @@
+<app-header></app-header>
+<p>
+    @for(item of menu; track item){
+        <button type="button" (click)="seleccionar($index)"><i class={{item.icono}}></i> {{item.texto}}</button>
+    }
+</p>
+<app-notification/>
+<main class="container-fluid">
+    <ng-container *ngComponentOutlet="actual"/>
+</main>
+<app-footer></app-footer>
